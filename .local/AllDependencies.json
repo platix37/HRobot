@@ -1037,9 +1037,9 @@
     "restore": {
       "projectUniqueName": "HRobot",
       "projectName": "HRobot",
-      "projectPath": "C:\\Platon\\sada\\HRobot\\.local",
+      "projectPath": "C:\\Platon\\HRobot\\.local",
       "packagesPath": "C:\\Users\\cristian.platon\\.nuget\\packages\\",
-      "outputPath": "C:\\Platon\\sada\\HRobot\\.local"
+      "outputPath": "C:\\Platon\\HRobot\\.local"
     },
     "frameworks": {
       "net461": {

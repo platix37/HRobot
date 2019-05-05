@@ -13,6 +13,7 @@
   <x:Members>
     <x:Property Name="in_outlookAccount" Type="InArgument(x:String)" />
     <x:Property Name="in_queueName" Type="InArgument(x:String)" />
+    <x:Property Name="out_mailCount" Type="OutArgument(x:Int32)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -81,7 +82,15 @@
         <InOutArgument x:TypeArguments="scg:List(snm:MailMessage)" x:Key="mails">[mails]</InOutArgument>
       </ui:InvokeCode.Arguments>
     </ui:InvokeCode>
-    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Mail messages number: &quot; + mails.Count.ToString]" />
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Int32">[out_mailCount]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Int32">[mails.Count]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Mail messages number: &quot; + out_mailCount.ToString]" />
     <ui:ForEach x:TypeArguments="snm:MailMessage" CurrentIndex="{x:Null}" DisplayName="For Each" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[mails]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="snm:MailMessage">
@@ -100,7 +109,7 @@
                       <OutArgument x:TypeArguments="x:String">[mailUID]</OutArgument>
                     </Assign.To>
                     <Assign.Value>
-                      <InArgument x:TypeArguments="x:String">[mail.Headers("UID")]</InArgument>
+                      <InArgument x:TypeArguments="x:String">[mail.Headers("UID").Trim]</InArgument>
                     </Assign.Value>
                   </Assign>
                   <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Queue Item" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="[in_queueName]" Reference="[mail.Sender.Address]">
@@ -116,13 +125,14 @@
         </ActivityAction>
       </ui:ForEach.Body>
     </ui:ForEach>
-    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XE1haWwtd29ya2Zsb3dzXE1haWxEaXNwYXRjaGVyLnhhbWwbSQN4DgIBAU0FTZQBAgEmTgVOvgICAR9PBVMVAgEcVAVUsgECARlVBXYSAgECTXJNkQECASdOtwJOuwICASVOT05kAgEjTo8CTpgCAgEhTusBTvIBAgEgUVJRWQIBHVRyVK8BAgEaVZcBVaABAgEXWwtzFgIBA1wNchICAQRcG1xMAgEFXhFwHAIBB2ITaRwCARJqE24lAgELbxNvyAECAQhnPmdTAgEVZD9kSAIBE2rcAWrzAQIBEGrBAWrRAQIBDmxObFcCAQxvgAFvxQECAQk=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XE1haWwtd29ya2Zsb3dzXE1haWxEaXNwYXRjaGVyLnhhbWweSgOBAQ4CAQFOBU6UAQIBK08FT74CAgEkUAVUFQIBIVUFXA4CARxdBV20AQIBGV4FfxICAQJOck6RAQIBLE+3Ak+7AgIBKk9PT2QCAShPjwJPmAICASZP6wFP8gECASVSUlJZAgEiWi9aPAIBH1cwVz8CAR1dcl2xAQIBGl6XAV6gAQIBF2QLfBYCAQNlDXsSAgEEZRtlTAIBBWcReRwCAQdrE3IcAgEScxN3JQIBC3gTeMgBAgEIcD5wWAIBFW0/bUgCARNz3AFz8wECARBzwQFz0QECAQ51TnVXAgEMeIABeMUBAgEJ</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="502,91" />
       <sap2010:ViewStateData Id="GetOutlookMailMessages_1" sap:VirtualizedContainerService.HintSize="502,22" />
       <sap2010:ViewStateData Id="InvokeCode_1" sap:VirtualizedContainerService.HintSize="502,164" />
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="502,60" />
       <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="502,91" />
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314,60" />
       <sap2010:ViewStateData Id="AddQueueItem_1" sap:VirtualizedContainerService.HintSize="314,22" />
@@ -143,14 +153,14 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="502,783" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="524,1435">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="524,1535">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="GetMails_1" sap:VirtualizedContainerService.HintSize="564,1515" />
+      <sap2010:ViewStateData Id="GetMails_1" sap:VirtualizedContainerService.HintSize="564,1615" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

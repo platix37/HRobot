@@ -84,7 +84,7 @@
       <If.Then>
         <Sequence sap2010:Annotation.AnnotationText="Write data to the added fields that identify the Transaction" DisplayName="Write Transaction info in Logging Fields" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
-            <Variable x:TypeArguments="ui:GenericValue" Name="out_TransactionMail" />
+            <Variable x:TypeArguments="x:String" Name="outlookAccount" />
           </Sequence.Variables>
           <Assign DisplayName="Assign TransactionID" sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
@@ -96,30 +96,40 @@
           </Assign>
           <Assign sap2010:WorkflowViewState.IdRef="Assign_5">
             <Assign.To>
-              <OutArgument x:TypeArguments="ui:GenericValue">[out_TransactionMail]</OutArgument>
+              <OutArgument x:TypeArguments="snm:MailMessage">[out_TransactionMail]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="ui:GenericValue">[Nothing]</InArgument>
+              <InArgument x:TypeArguments="snm:MailMessage">[Nothing]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_6">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[outlookAccount]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[in_Config("outlookAccount")]</InArgument>
             </Assign.Value>
           </Assign>
           <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke RetrieveMailItem workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mail-workflows\RetrieveMailItem.xaml">
             <ui:InvokeWorkflowFile.Arguments>
               <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[out_TransactionItem]</InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="in_outlookAccount">[in_Config("outlookAccount")]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_outlookAccount">[outlookAccount]</InArgument>
+              <OutArgument x:TypeArguments="snm:MailMessage" x:Key="out_mailMessage">[out_TransactionMail]</OutArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
         </Sequence>
       </If.Then>
     </If>
-    <sads:DebugSymbol.Symbol>dzJDOlxQbGF0b25cSFJvYm90XEZyYW1ld29ya1xHZXRUcmFuc2FjdGlvbkRhdGEueGFtbBFRA3MOAgEBUgVSiAICARNTBXEKAgECUqQBUt0BAgEWUu4BUoUCAgEUUxNTOAIBA1UJbxQCAQRZC2AUAgEPYQtoFAIBC2kLbiMCAQVeNl5EAgESWzdbSgIBEGY9ZkYCAQ5jPmNTAgEMbFBsbQIBCWtVa2oCAQdpwwFp6QECAQY=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzJDOlxQbGF0b25cSFJvYm90XEZyYW1ld29ya1xHZXRUcmFuc2FjdGlvbkRhdGEueGFtbBVRA3wOAgEBUgVSiAICARpTBXoKAgECUqQBUt0BAgEdUu4BUoUCAgEbUxNTOAIBA1UJeBQCAQRZC2AUAgEWYQtoFAIBEmkLcBQCAQ1xC3cjAgEFXjZeRAIBGVs3W0oCARdmPWZGAgEVYz5jUwIBE242blMCARBrN2tHAgEOdFB0YAIBC3VWdWsCAQlzVXNqAgEHccMBcekBAgEG</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="GetQueueItem_1" sap:VirtualizedContainerService.HintSize="464,22" />
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314,60" />
       <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="314,60" />
       <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,453">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,553">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -127,8 +137,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,601" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,964">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,701" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,1064">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -136,7 +146,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="GetTransactionData_1" sap:VirtualizedContainerService.HintSize="526,1044" />
+      <sap2010:ViewStateData Id="GetTransactionData_1" sap:VirtualizedContainerService.HintSize="526,1144" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

@@ -67,13 +67,14 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="MailDispatcher" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:List(snm:MailMessage)" Name="mails" />
     </Sequence.Variables>
-    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Retrieving emails&quot;]" />
+    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Mail Dispatcher&quot;]" />
     <ui:GetOutlookMailMessages Filter="{x:Null}" TimeoutMS="{x:Null}" Account="[in_outlookAccount]" DisplayName="Get Outlook Mail Messages" GetAttachements="False" sap2010:WorkflowViewState.IdRef="GetOutlookMailMessages_1" MailFolder="Inbox" MarkAsRead="False" Messages="[mails]" OnlyUnreadMessages="True" Top="-1" />
     <ui:InvokeCode ContinueOnError="{x:Null}" Code="mails.Reverse()" DisplayName="Invoke Code" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
       <ui:InvokeCode.Arguments>
@@ -107,7 +108,7 @@
                       <InArgument x:TypeArguments="x:String" x:Key="mailUID">[mailUID]</InArgument>
                     </ui:AddQueueItem.ItemInformation>
                   </ui:AddQueueItem>
-                  <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Queue item for mail with subject &quot; +mail.Subject+ &quot; added.&quot;]" />
+                  <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Queue item added for mail with Subject &quot; +mail.Subject]" />
                 </Sequence>
               </If.Then>
             </If>
@@ -115,7 +116,7 @@
         </ActivityAction>
       </ui:ForEach.Body>
     </ui:ForEach>
-    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XE1haWwtd29ya2Zsb3dzXE1haWxEaXNwYXRjaGVyLnhhbWwbSAN3DgIBAUwFTJYBAgEmTQVNvgICAR9OBVIVAgEcUwVTsgECARlUBXUSAgECTHJMkwECASdNtwJNuwICASVNT01kAgEjTY8CTZgCAgEhTesBTfIBAgEgUFJQWQIBHVNyU68BAgEaVJcBVKABAgEXWgtyFgIBA1sNcRICAQRbG1tMAgEFXRFvHAIBB2ETaBwCARJpE20lAgELbhNu1wECAQhmPmZTAgEVYz9jSAIBE2ncAWnzAQIBEGnBAWnRAQIBDmtOa1cCAQxugAFu1AECAQk=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XE1haWwtd29ya2Zsb3dzXE1haWxEaXNwYXRjaGVyLnhhbWwbSQN4DgIBAU0FTZQBAgEmTgVOvgICAR9PBVMVAgEcVAVUsgECARlVBXYSAgECTXJNkQECASdOtwJOuwICASVOT05kAgEjTo8CTpgCAgEhTusBTvIBAgEgUVJRWQIBHVRyVK8BAgEaVZcBVaABAgEXWwtzFgIBA1wNchICAQRcG1xMAgEFXhFwHAIBB2ITaRwCARJqE24lAgELbxNvyAECAQhnPmdTAgEVZD9kSAIBE2rcAWrzAQIBEGrBAWrRAQIBDmxObFcCAQxvgAFvxQECAQk=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

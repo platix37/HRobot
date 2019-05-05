@@ -74,7 +74,6 @@
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="This workflow outputs a settings Dictionary with key/value pairs to be used in the project. Settings are read from local config file then fetched from Orchestrator assets. &#xA;Assets will overwrite the config file settings" DisplayName="Get All Settings" sap2010:WorkflowViewState.IdRef="Sequence_2">
@@ -187,7 +186,7 @@
         </Catch>
       </TryCatch.Catches>
     </TryCatch>
-    <sads:DebugSymbol.Symbol>dy9DOlxQbGF0b25cSFJvYm90XEZyYW1ld29ya1xJbml0QWxsU2V0dGluZ3MueGFtbCoBowEB0gEBAwFqAXsBAlADvwEOAgEBUQVYDgIBL1kFfBICARx9Bb0BEAIBAlZKVm0CATJTS1NXAgEwWaUBWbgBAgEtXwt5FgIBHX8JsQEUAgEFuQENuQGvAQIBA2MNY90BAgEmZA14HQIBHoMBC4MB0wECARaEAQuwARsCAQa5AXu5AawBAgEEY0hjVwIBK2OyAWO7AQIBKWPJAWPaAQIBJ2Q+ZE0CASRqE3UYAgEfgwFGgwFQAgEagwGpAYMBsQECARmDAb8BgwHQAQIBF4QBPIQBRgIBFIoBEa0BHAIBB2ohamICASBsF3MgAgEhjAEVnQEgAgEMpQEZqQEeAgEIcUJxWQIBI25DbmoCASKQAReUASoCARCVARecASACAQ2lASelAWQCAQmnAR2nAfkBAgEKkgFKkgFWAgESkAFIkAFrAgERmgFCmgFOAgEPlwFDlwFlAgEOpwGKAacB9gECAQs=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dy9DOlxQbGF0b25cSFJvYm90XEZyYW1ld29ya1xJbml0QWxsU2V0dGluZ3MueGFtbCoBowEB0gEBAwFqAXsBAk8DvgEOAgEBUAVXDgIBL1gFexICARx8BbwBEAIBAlVKVW0CATJSS1JXAgEwWKUBWLgBAgEtXgt4FgIBHX4JsAEUAgEFuAENuAGvAQIBA2INYt0BAgEmYw13HQIBHoIBC4IB0wECARaDAQuvARsCAQa4AXu4AawBAgEEYkhiVwIBK2KyAWK7AQIBKWLJAWLaAQIBJ2M+Y00CASRpE3QYAgEfggFGggFQAgEaggGpAYIBsQECARmCAb8BggHQAQIBF4MBPIMBRgIBFIkBEawBHAIBB2khaWICASBrF3IgAgEhiwEVnAEgAgEMpAEZqAEeAgEIcEJwWQIBI21DbWoCASKPAReTASoCARCUARebASACAQ2kASekAWQCAQmmAR2mAfkBAgEKkQFKkQFWAgESjwFIjwFrAgERmQFCmQFOAgEPlgFDlgFlAgEOpgGKAaYB9gECAQs=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

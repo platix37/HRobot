@@ -146,7 +146,7 @@
                     <OutArgument x:TypeArguments="x:String">[outlookAccount]</OutArgument>
                   </Assign.To>
                   <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">[Config("OrchestratorQueueName")]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[Config("outlookAccount")]</InArgument>
                   </Assign.Value>
                 </Assign>
                 <Assign sap2010:WorkflowViewState.IdRef="Assign_21">
@@ -419,7 +419,7 @@
       <Variable x:TypeArguments="x:String" Name="outlookAccount" />
       <Variable x:TypeArguments="x:String" Name="queueName" />
     </StateMachine.Variables>
-    <sads:DebugSymbol.Symbol>dxpDOlxQbGF0b25cSFJvYm90XE1haW4ueGFtbHpUA6cDEgIBAZ4DM54DNgMBtwGgAzOgAzYDAbYBvgEPhgMXAwGFAf0BF9YCHwIBU98CF/4CHwIBRlYHlAMPAgECwAET+AEeAwGQAdsCK9sCSgMBjgHZAhfZAuEBAwGKAYMDK4MDRwMBiQGBAxeBA8gBAwGHAf8BG88CJgIBWtIClgHSArMBAgFX0wKfAdMCxgECAVbUAooC1ALJAgIBVeECG/wCJgIBSFgLuQEWAgEOiwMjiwM7AgELiQMPiQOdAQIBCpEDI5EDPgIBCI8DD48D9gECAQTEARXEAYsBAwGzAcUBFfcBGgMBkQHZAoUB2QLeAQMBiwGBA4UBgQPFAQMBiAGBAh+QAioCAXqzAh/NAioCAWWYAiOfAiwCAWCnAiOuAiwCAVvjAh/pAioCAVDxAiP4Ai4CAUlaD6YBGgIBFK4BE7UBHAIBD48DfY8D8wECAQXEAXrEAYgBAwG0AcUBI8UBMQMBkgHHARnRASQDAawB1AEZ9QEkAwGUAYICIYkCKgMBgQGKAiGPAjkCAXu1AiPBAjsCAWrJAifJAocCAgFmnQJenQJpAgFjmgJfmgJ2AgFhrAJRrAJcAgFeqQJSqQJfAgFc5AIh6AI5AgFR8gIl8gKJAgIBTPMCJfcCPQIBSlsRYhoCAUJjEYoBFgIBKYsBEY8BKQIBJZABEZcBGgIBIJgBEZ8BGgIBG6ABEaUBKQIBFbMBQbMBTAIBErABQrABTwIBEMgBG8gBtwEDAbEByQEb0AEkAwGtAdYBHd8BNQMBoAHnASHxASwDAZUBhwJchwJlAwGEAYQCXYQCdAMBggGNAniNAoABAgF/jAJrjAJ8AgF9igLbAYoC6QECAXy4Ami4AnUCAXi5An+5ApYBAgF2uwJnuwJ0AgF0twJ6twKCAQIBcroCbboCfgIBcLwCbbwCgAECAW6/Ame/AnYCAWy1AuABtQKFAgIBa8kClgHJAoQCAgFn5ALdAeQCggICAVLyApMB8gKGAgIBTfMC3QHzAv4BAgFLYD9gSAIBRV1AXU0CAUNjH2M0AgEqZRWIASACASyNAWiNAXACASeLAc0BiwHxAQIBJpUBPJUBXQIBI5IBPZIBTQIBIZ0BPJ0BXQIBHpoBPZoBSAIBHKIBVqIBZgIBGaAByAGgAewBAgEYowFRowFcAgEWyAGOAcgBtAEDAbIBzgFKzgFTAwGwAcsBS8sBXAMBrgHbAWPbAXIDAaoB2gFp2gF6AwGoAdgBZNgBdwMBpgHZAXTZAXwDAaQB3AFq3AF7AwGiAdYB2AHWAfsBAwGhAegBI+gBvgIDAZoB6QEj8AEsAwGWAWYXbC8CATxtF30iAgEyfheCAS8CATCDAReHASkCAS3oAZIB6AG7AgMBmwHuAVLuAVsDAZkB6wFT6wFkAwGXAWpwangCAUBmzwFm7wECAT9pXGl3AgE+aFhoaAIBPW4ZfB4CATN+0AF+8QECATGFAWOFAZABAgEubiduWgIBNHAddyYCATd6HXqFAgIBNnVIdV8CATpySXJqAgE4</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dxpDOlxQbGF0b25cSFJvYm90XE1haW4ueGFtbHpUA6cDEgIBAZ4DM54DNgMBtwGgAzOgAzYDAbYBvgEPhgMXAwGFAf0BF9YCHwIBU98CF/4CHwIBRlYHlAMPAgECwAET+AEeAwGQAdsCK9sCSgMBjgHZAhfZAuEBAwGKAYMDK4MDRwMBiQGBAxeBA8gBAwGHAf8BG88CJgIBWtIClgHSArMBAgFX0wKfAdMCxgECAVbUAooC1ALJAgIBVeECG/wCJgIBSFgLuQEWAgEOiwMjiwM7AgELiQMPiQOdAQIBCpEDI5EDPgIBCI8DD48D9gECAQTEARXEAYsBAwGzAcUBFfcBGgMBkQHZAoUB2QLeAQMBiwGBA4UBgQPFAQMBiAGBAh+QAioCAXqzAh/NAioCAWWYAiOfAiwCAWCnAiOuAiwCAVvjAh/pAioCAVDxAiP4Ai4CAUlaD6YBGgIBFK4BE7UBHAIBD48DfY8D8wECAQXEAXrEAYgBAwG0AcUBI8UBMQMBkgHHARnRASQDAawB1AEZ9QEkAwGUAYICIYkCKgMBgQGKAiGPAjkCAXu1AiPBAjsCAWrJAifJAocCAgFmnQJenQJpAgFjmgJfmgJ2AgFhrAJRrAJcAgFeqQJSqQJfAgFc5AIh6AI5AgFR8gIl8gKJAgIBTPMCJfcCPQIBSlsRYhoCAUJjEYoBFgIBKYsBEY8BKQIBJZABEZcBGgIBIJgBEZ8BGgIBG6ABEaUBKQIBFbMBQbMBTAIBErABQrABTwIBEMgBG8gBtwEDAbEByQEb0AEkAwGtAdYBHd8BNQMBoAHnASHxASwDAZUBhwJchwJlAwGEAYQCXYQCdAMBggGNAniNAoABAgF/jAJrjAJ8AgF9igLbAYoC6QECAXy4Ami4AnUCAXi5An+5ApYBAgF2uwJnuwJ0AgF0twJ6twKCAQIBcroCbboCfgIBcLwCbbwCgAECAW6/Ame/AnYCAWy1AuABtQKFAgIBa8kClgHJAoQCAgFn5ALdAeQCggICAVLyApMB8gKGAgIBTfMC3QHzAv4BAgFLYD9gSAIBRV1AXU0CAUNjH2M0AgEqZRWIASACASyNAWiNAXACASeLAc0BiwHxAQIBJpUBPJUBVgIBI5IBPZIBTQIBIZ0BPJ0BXQIBHpoBPZoBSAIBHKIBVqIBZgIBGaAByAGgAewBAgEYowFRowFcAgEWyAGOAcgBtAEDAbIBzgFKzgFTAwGwAcsBS8sBXAMBrgHbAWPbAXIDAaoB2gFp2gF6AwGoAdgBZNgBdwMBpgHZAXTZAXwDAaQB3AFq3AF7AwGiAdYB2AHWAfsBAwGhAegBI+gBvgIDAZoB6QEj8AEsAwGWAWYXbC8CATxtF30iAgEyfheCAS8CATCDAReHASkCAS3oAZIB6AG7AgMBmwHuAVLuAVsDAZkB6wFT6wFkAwGXAWpwangCAUBmzwFm7wECAT9pXGl3AgE+aFhoaAIBPW4ZfB4CATN+0AF+8QECATGFAWOFAZABAgEubiduWgIBNHAddyYCATd6HXqFAgIBNnVIdV8CATpySXJqAgE4</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -693,7 +693,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_4" sap:VirtualizedContainerService.HintSize="827,1122">
+      <sap2010:ViewStateData Id="State_4" sap:VirtualizedContainerService.HintSize="231,97">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">274.5,181.5</av:Point>
@@ -727,7 +727,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_2" sap:VirtualizedContainerService.HintSize="234,88">
+      <sap2010:ViewStateData Id="State_2" sap:VirtualizedContainerService.HintSize="530,2059">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">274.5,8.5</av:Point>

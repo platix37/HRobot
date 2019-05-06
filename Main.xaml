@@ -154,6 +154,14 @@
                     <InArgument x:TypeArguments="x:String">[Config("OrchestratorQueueName")]</InArgument>
                   </Assign.Value>
                 </Assign>
+                <Assign sap2010:WorkflowViewState.IdRef="Assign_22">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[tempFolder]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[Config("tempFolder")]</InArgument>
+                  </Assign.Value>
+                </Assign>
                 <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke MailDispatcher workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" UnSafe="False" WorkflowFileName="Mail-workflows\MailDispatcher.xaml">
                   <ui:InvokeWorkflowFile.Arguments>
                     <InArgument x:TypeArguments="x:String" x:Key="in_outlookAccount">[outlookAccount]</InArgument>
@@ -163,12 +171,31 @@
                 </ui:InvokeWorkflowFile>
                 <If Condition="[mailCount &gt; 0]" DisplayName="If - any queue item added" sap2010:WorkflowViewState.IdRef="If_10">
                   <If.Then>
-                    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke InitiAllApplications workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Framework\InitAllApplications.xaml">
-                      <ui:InvokeWorkflowFile.Arguments>
-                        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[Config]</InArgument>
-                        <OutArgument x:TypeArguments="ui:Browser" x:Key="out_browserWindow">[browserWindow]</OutArgument>
-                      </ui:InvokeWorkflowFile.Arguments>
-                    </ui:InvokeWorkflowFile>
+                    <Sequence sap2010:WorkflowViewState.IdRef="Sequence_25">
+                      <Sequence DisplayName="Folder Setup &amp; Cleanup " sap2010:WorkflowViewState.IdRef="Sequence_24">
+                        <Sequence.Variables>
+                          <Variable x:TypeArguments="x:Boolean" Name="folderExists" />
+                        </Sequence.Variables>
+                        <ui:PathExists DisplayName="Path Exists" Exists="[folderExists]" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="[tempFolder]" PathType="Folder" />
+                        <If Condition="[folderExists]" sap2010:WorkflowViewState.IdRef="If_11">
+                          <If.Then>
+                            <Sequence sap2010:WorkflowViewState.IdRef="Sequence_23">
+                              <ui:Delete ContinueOnError="{x:Null}" sap2010:WorkflowViewState.IdRef="Delete_1" Path="[tempFolder]" />
+                              <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create Directory" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[tempFolder]" />
+                            </Sequence>
+                          </If.Then>
+                          <If.Else>
+                            <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create Directory" sap2010:WorkflowViewState.IdRef="CreateDirectory_2" Path="[tempFolder]" />
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke InitiAllApplications workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Framework\InitAllApplications.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[Config]</InArgument>
+                          <OutArgument x:TypeArguments="ui:Browser" x:Key="out_browserWindow">[browserWindow]</OutArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                    </Sequence>
                   </If.Then>
                   <If.Else>
                     <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_31" Level="Info" Message="[&quot;No queue items added&quot;]" />
@@ -229,7 +256,7 @@
                                 <OutArgument x:TypeArguments="ui:QueueItem" x:Key="out_TransactionItem">[TransactionItem]</OutArgument>
                                 <OutArgument x:TypeArguments="x:String" x:Key="out_TransactionID">[TransactionID]</OutArgument>
                                 <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_TransactionData">[TransactionData]</InOutArgument>
-                                <OutArgument x:TypeArguments="snm:MailMessage" x:Key="out_TransactionMail" />
+                                <OutArgument x:TypeArguments="snm:MailMessage" x:Key="out_TransactionMail">[TransactionMail]</OutArgument>
                               </ui:InvokeWorkflowFile.Arguments>
                             </ui:InvokeWorkflowFile>
                           </TryCatch.Try>
@@ -276,8 +303,8 @@
                                 </Assign>
                                 <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ProcessTransaction workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Process.xaml">
                                   <ui:InvokeWorkflowFile.Arguments>
-                                    <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[TransactionItem]</InArgument>
                                     <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[Config]</InArgument>
+                                    <InArgument x:TypeArguments="snm:MailMessage" x:Key="in_mail">[TransactionMail]</InArgument>
                                   </ui:InvokeWorkflowFile.Arguments>
                                 </ui:InvokeWorkflowFile>
                               </Sequence>
@@ -369,6 +396,19 @@
                                     <InArgument x:TypeArguments="ui:Browser" x:Key="in_browserWindow">[browserWindow]</InArgument>
                                   </ui:InvokeWorkflowFile.Arguments>
                                 </ui:InvokeWorkflowFile>
+                                <Sequence DisplayName="Folder Setup &amp; Cleanup " sap2010:WorkflowViewState.IdRef="Sequence_27">
+                                  <Sequence.Variables>
+                                    <Variable x:TypeArguments="x:Boolean" Name="folderExists" />
+                                  </Sequence.Variables>
+                                  <ui:PathExists DisplayName="Path Exists" Exists="[folderExists]" sap2010:WorkflowViewState.IdRef="PathExists_2" Path="[tempFolder]" PathType="Folder" />
+                                  <If Condition="[folderExists]" sap2010:WorkflowViewState.IdRef="If_12">
+                                    <If.Then>
+                                      <Sequence sap2010:WorkflowViewState.IdRef="Sequence_26">
+                                        <ui:Delete ContinueOnError="{x:Null}" sap2010:WorkflowViewState.IdRef="Delete_2" Path="[tempFolder]" />
+                                      </Sequence>
+                                    </If.Then>
+                                  </If>
+                                </Sequence>
                               </Sequence>
                             </TryCatch.Try>
                             <TryCatch.Catches>
@@ -430,12 +470,14 @@
       <Variable x:TypeArguments="x:String" Name="outlookAccount" />
       <Variable x:TypeArguments="x:String" Name="queueName" />
       <Variable x:TypeArguments="ui:Browser" Name="browserWindow" />
+      <Variable x:TypeArguments="x:String" Name="tempFolder" />
+      <Variable x:TypeArguments="snm:MailMessage" Name="TransactionMail" />
     </StateMachine.Variables>
-    <sads:DebugSymbol.Symbol>dxpDOlxQbGF0b25cSFJvYm90XE1haW4ueGFtbIEBUwOzAxICAQGpAzOpAzYDAcIBqwMzqwM2AwHBAckBD5EDFwMBkAGIAhfhAh8CAV7qAheJAx8CAU9VB58DDwIBAssBE4MCHgMBmwHmAivmAkoDAZkB5AIX5ALhAQMBlQGOAyuOA0cDAZQBjAMXjAPIAQMBkgGKAhvaAiYCAWXdApYB3QKzAQIBYt4CnwHeAsYBAgFh3wKKAt8CyQICAWDsAhuHAyYCAVFXC8QBFgIBDpYDI5YDOwIBC5QDD5QDnQECAQqcAyOcAz4CAQiaAw+aA/YBAgEEzwEVzwGLAQMBvgHQARWCAhoDAZwB5AKFAeQC3gEDAZYBjAOFAYwDxQEDAZMBjAIfmwIqAwGFAb4CH9gCKgIBcKMCI6oCLAIBa7ICI7kCLAIBZu4CH/QCKgIBWfwCI4MDLgIBUlkPsQEaAgEUuQETwAEcAgEPmgN9mgPzAQIBBc8Bes8BiAEDAb8B0AEj0AExAwGdAdIBGdwBJAMBtwHfARmAAiQDAZ8BjQIhlAIqAwGMAZUCIZoCOQMBhgHAAiPMAjsCAXXUAifUAocCAgFxqAJeqAJpAgFupQJfpQJ2AgFstwJRtwJcAgFptAJStAJfAgFn7wIh8wI5AgFa/QIl/QKJAgIBVf4CJYIDPQIBU10RZBoCAUtlEYwBFgIBMo0BEZQBGgIBLZUBEZwBGgIBKJ0BEaMBKQIBIKQBEbABFgIBFb4BQb4BTAIBErsBQrsBTwIBENMBG9MBtwEDAbwB1AEb2wEkAwG4AeEBHeoBNQMBqwHyASH8ASwDAaABkgJckgJlAwGPAY8CXY8CdAMBjQGYAniYAoABAwGKAZcCa5cCfAMBiAGVAtsBlQLpAQMBhwHDAmjDAnUDAYMBxAJ/xAKWAQMBgQHGAmfGAnQCAX/CAnrCAoIBAgF9xQJtxQJ+AgF7xwJtxwKAAQIBecoCZ8oCdgIBd8AC4AHAAoUCAgF21AKWAdQChAICAXLxAmfxAnYCAVzvAt0B7wKCAgIBW/0CkwH9AoYCAgFW/gLdAf4C/gECAVRiP2JIAgFOX0BfTQIBTGUfZTQCATNnFYoBIAIBNZIBPJIBVgIBMI8BPY8BTQIBLpoBPJoBXQIBK5cBPZcBSAIBKZ8BVp8BZgIBJqEBUqEBXQIBJJ0ByAGdAewBAgEjoAFRoAFcAgEhpAEfpAEzAgEWpgEVqwEtAgEargEVrgGqAQIBGNMBjgHTAbQBAwG9AdkBStkBUwMBuwHWAUvWAVwDAbkB5gFj5gFyAwG1AeUBaeUBegMBswHjAWTjAXcDAbEB5AF05AF8AwGvAecBaucBewMBrQHhAdgB4QH7AQMBrAHzASPzAb4CAwGlAfQBI/sBLAMBoQFoF24vAgFFbxd/IgIBO4ABF4QBLwIBOYUBF4kBKQIBNqkBXakBbAIBHqgBbKgBdAIBHKYB0QGmAfUBAgEbrgGDAa4BpwECARnzAZIB8wG7AgMBpgH5AVL5AVsDAaQB9gFT9gFkAwGiAWxwbHgCAUlozwFo7wECAUhrXGt3AgFHalhqaAIBRnAZfh4CATyAAdABgAHxAQIBOocBY4cBkAECATdwJ3BaAgE9ch15JgIBQHwdfIUCAgE/d0h3XwIBQ3RJdGoCAUE=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="653,60" />
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="847,60" />
       <sap2010:ViewStateData Id="InvokeWorkflowFile_12" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="Assign_19" sap:VirtualizedContainerService.HintSize="242,60" />
       <sap2010:ViewStateData Id="Comment_2" sap:VirtualizedContainerService.HintSize="314,112" />
@@ -471,7 +513,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="653,738">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="847,738">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -479,13 +521,41 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Assign_20" sap:VirtualizedContainerService.HintSize="653,60" />
-      <sap2010:ViewStateData Id="Assign_21" sap:VirtualizedContainerService.HintSize="653,60" />
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_19" sap:VirtualizedContainerService.HintSize="653,87" />
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_5" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="Assign_20" sap:VirtualizedContainerService.HintSize="847,60" />
+      <sap2010:ViewStateData Id="Assign_21" sap:VirtualizedContainerService.HintSize="847,60" />
+      <sap2010:ViewStateData Id="Assign_22" sap:VirtualizedContainerService.HintSize="847,60" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_19" sap:VirtualizedContainerService.HintSize="847,87" />
+      <sap2010:ViewStateData Id="PathExists_1" sap:VirtualizedContainerService.HintSize="464,89" />
+      <sap2010:ViewStateData Id="Delete_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="CreateDirectory_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_23" sap:VirtualizedContainerService.HintSize="222,208">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="CreateDirectory_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="If_11" sap:VirtualizedContainerService.HintSize="464,356" />
+      <sap2010:ViewStateData Id="Sequence_24" sap:VirtualizedContainerService.HintSize="486,609">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_5" sap:VirtualizedContainerService.HintSize="486,87" />
+      <sap2010:ViewStateData Id="Sequence_25" sap:VirtualizedContainerService.HintSize="508,860">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="LogMessage_31" sap:VirtualizedContainerService.HintSize="314,91" />
-      <sap2010:ViewStateData Id="If_10" sap:VirtualizedContainerService.HintSize="653,239" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="675,1568">
+      <sap2010:ViewStateData Id="If_10" sap:VirtualizedContainerService.HintSize="847,1008" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="869,2437">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -494,7 +564,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Assign_14" sap:VirtualizedContainerService.HintSize="242,60" />
-      <sap2010:ViewStateData Id="Catch`1_3" sap:VirtualizedContainerService.HintSize="679,21">
+      <sap2010:ViewStateData Id="Catch`1_3" sap:VirtualizedContainerService.HintSize="873,21">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -502,7 +572,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="693,1795">
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="887,2664">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -634,7 +704,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_3" sap:VirtualizedContainerService.HintSize="211,142">
+      <sap2010:ViewStateData Id="State_3" sap:VirtualizedContainerService.HintSize="444,1018">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">285,380</av:Point>
@@ -658,7 +728,25 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="InvokeWorkflowFile_6" sap:VirtualizedContainerService.HintSize="314,87" />
-      <sap2010:ViewStateData Id="Sequence_20" sap:VirtualizedContainerService.HintSize="336,211">
+      <sap2010:ViewStateData Id="PathExists_2" sap:VirtualizedContainerService.HintSize="464,89" />
+      <sap2010:ViewStateData Id="Delete_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_26" sap:VirtualizedContainerService.HintSize="222,146">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_12" sap:VirtualizedContainerService.HintSize="464,294" />
+      <sap2010:ViewStateData Id="Sequence_27" sap:VirtualizedContainerService.HintSize="314,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_20" sap:VirtualizedContainerService.HintSize="336,302">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -682,7 +770,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_4" sap:VirtualizedContainerService.HintSize="418,438" />
+      <sap2010:ViewStateData Id="TryCatch_4" sap:VirtualizedContainerService.HintSize="418,529" />
       <sap2010:ViewStateData Id="State_1" sap:VirtualizedContainerService.HintSize="124,104">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -765,7 +853,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Main2_1" sap:VirtualizedContainerService.HintSize="826,906" />
+      <sap2010:ViewStateData Id="Main2_1" sap:VirtualizedContainerService.HintSize="826,866" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

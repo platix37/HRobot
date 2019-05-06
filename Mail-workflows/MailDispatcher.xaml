@@ -68,7 +68,6 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="MailDispatcher" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -112,7 +111,7 @@
                       <InArgument x:TypeArguments="x:String">[mail.Headers("UID").Trim]</InArgument>
                     </Assign.Value>
                   </Assign>
-                  <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Queue Item" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="[in_queueName]" Reference="[mail.Sender.Address]">
+                  <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Queue Item" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="[in_queueName]" Reference="[mail.Subject]">
                     <ui:AddQueueItem.ItemInformation>
                       <InArgument x:TypeArguments="x:String" x:Key="mailUID">[mailUID]</InArgument>
                     </ui:AddQueueItem.ItemInformation>
@@ -125,7 +124,7 @@
         </ActivityAction>
       </ui:ForEach.Body>
     </ui:ForEach>
-    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XE1haWwtd29ya2Zsb3dzXE1haWxEaXNwYXRjaGVyLnhhbWweSgOBAQ4CAQFOBU6UAQIBK08FT74CAgEkUAVUFQIBIVUFXA4CARxdBV20AQIBGV4FfxICAQJOck6RAQIBLE+3Ak+7AgIBKk9PT2QCAShPjwJPmAICASZP6wFP8gECASVSUlJZAgEiWi9aPAIBH1cwVz8CAR1dcl2xAQIBGl6XAV6gAQIBF2QLfBYCAQNlDXsSAgEEZRtlTAIBBWcReRwCAQdrE3IcAgEScxN3JQIBC3gTeMgBAgEIcD5wWAIBFW0/bUgCARNz3AFz8wECARBzwQFz0QECAQ51TnVXAgEMeIABeMUBAgEJ</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XE1haWwtd29ya2Zsb3dzXE1haWxEaXNwYXRjaGVyLnhhbWweSQOAAQ4CAQFNBU2UAQIBK04FTr4CAgEkTwVTFQIBIVQFWw4CARxcBVy0AQIBGV0FfhICAQJNck2RAQIBLE63Ak67AgIBKk5PTmQCAShOjwJOmAICASZO6wFO8gECASVRUlFZAgEiWS9ZPAIBH1YwVj8CAR1cclyxAQIBGl2XAV2gAQIBF2MLexYCAQNkDXoSAgEEZBtkTAIBBWYReBwCAQdqE3EcAgESchN2JQIBC3cTd8gBAgEIbz5vWAIBFWw/bEgCARNy3AFy7AECARBywQFy0QECAQ50TnRXAgEMd4ABd8UBAgEJ</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

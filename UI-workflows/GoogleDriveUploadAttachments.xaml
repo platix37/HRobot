@@ -67,8 +67,8 @@
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
       <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="GoogleDriveUploadAttachments" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -92,7 +92,7 @@
             <If Condition="[folderExists]" sap2010:WorkflowViewState.IdRef="If_1">
               <If.Then>
                 <Sequence sap2010:WorkflowViewState.IdRef="Sequence_3">
-                  <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Folder exists for &quot; + in_personName]" />
+                  <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;GoogleDrive: Folder exists for &quot; + in_personName]" />
                   <ui:ClickText ContinueOnError="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click Text Folder" FormattedText="False" sap2010:WorkflowViewState.IdRef="ClickText_1" KeyModifiers="None" MouseButton="BTN_LEFT" Occurrence="1" SendWindowMessages="False" Text="[in_personName]">
                     <ui:ClickText.CursorPosition>
                       <ui:CursorPosition Position="Center">
@@ -127,7 +127,7 @@
                   <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="7ec8488b777d4fe5e94c318077f83133" Selector="&lt;webctrl id='*ie' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
                 </ui:TypeInto.Target>
               </ui:TypeInto>
-              <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Created folder for &quot; +in_personName]" />
+              <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;GoogleDrive: Created folder for &quot; +in_personName]" />
             </Sequence>
             <ui:ClickText ContinueOnError="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_DOUBLE" DisplayName="Double Click Text" FormattedText="False" sap2010:WorkflowViewState.IdRef="ClickText_2" KeyModifiers="None" MouseButton="BTN_LEFT" Occurrence="1" SendWindowMessages="False" Text="[in_personName]">
               <ui:ClickText.CursorPosition>
@@ -161,7 +161,7 @@
                         <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a83d1bfb103d279f308f2168e9345f52" Selector="&lt;wnd app='iexplore.exe' cls='#32770' title='Choose File to Upload' /&gt;&lt;wnd ctrlid='1148' /&gt;" WaitForReady="INTERACTIVE" />
                       </ui:TypeInto.Target>
                     </ui:TypeInto>
-                    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Uploaded a file&quot;]" />
+                    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;GoogleDrive: Uploaded a file&quot;]" />
                   </Sequence>
                 </ActivityAction>
               </ui:ForEach.Body>
@@ -199,8 +199,8 @@
         <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
       </ui:SendHotkey.Target>
     </ui:SendHotkey>
-    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Attachments upload done&quot;]" />
-    <sads:DebugSymbol.Symbol>dz9DOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZVVwbG9hZEF0dGFjaG1lbnRzLnhhbWw3SgPMAQ4CAQFLBUukAQIBQ0wFxAEXAgEGxQEFyQEVAgEEygEFygGcAQIBAktyS6EBAgFETHNMhwECAUFSC8EBFgIBB8UB5AHFAeoBAgEFygFyygGZAQIBA1cNWyICATtcDXYSAgEtdw2DARgCASOEAQ2SARwCAR6TAQ2oARoCARKpAQ2tASICAQ2uAQ3AARICAQhZiwFZ6gECAT9Z9QFZ+wECAT5XTFdcAgE8XBtcKwIBLl4RdBwCATB4D3wfAgErfQ+BAR0CASeCAQ+CAbEBAgEkhAG3AoQByAICASCEAZMChAGWAgIBH5ABoAGQAdIBAgEikwGYAZMBrAECARyZAROlAR4CAROrAYsBqwG8AQIBEasBxwGrAc4BAgEQqQFMqQFaAgEOrgEbrgEpAgEJsAERvgEcAgELXxNftQECAThgE24iAgEzbxNzIwIBMXjuAXjxAQIBLH+iAX/KAQIBKn2jAn3MAgIBKIIBfIIBrgECASWaARWeASMCARqfARWjASMCARakARWkAaQBAgEUvAGkAbwBtQICAQxfgAFfsgECATlgvQJgzgICATVgmQJgnAICATRspgFs2AECATdv8gFv9wECATKaAZ8CmgG+AgIBG6EBqAGhAZACAgEZnwGpAp8BzQICARekAYIBpAGhAQIBFQ==</sads:DebugSymbol.Symbol>
+    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;GoogleDrive: Attachments upload done&quot;]" />
+    <sads:DebugSymbol.Symbol>dz9DOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZVVwbG9hZEF0dGFjaG1lbnRzLnhhbWw3SgPMAQ4CAQFLBUukAQIBQ0wFxAEXAgEGxQEFyQEVAgEEygEFygGpAQIBAktyS6EBAgFETHNMhwECAUFSC8EBFgIBB8UB5AHFAeoBAgEFygFyygGmAQIBA1cNWyICATtcDXYSAgEtdw2DARgCASOEAQ2SARwCAR6TAQ2oARoCARKpAQ2tASICAQ2uAQ3AARICAQhZiwFZ6gECAT9Z9QFZ+wECAT5XTFdcAgE8XBtcKwIBLl4RdBwCATB4D3wfAgErfQ+BAR0CASeCAQ+CAb4BAgEkhAG3AoQByAICASCEAZMChAGWAgIBH5ABoAGQAdIBAgEikwGYAZMBrAECARyZAROlAR4CAROrAYsBqwG8AQIBEasBxwGrAc4BAgEQqQFMqQFaAgEOrgEbrgEpAgEJsAERvgEcAgELXxNfwgECAThgE24iAgEzbxNzIwIBMXjuAXjxAQIBLH+iAX/KAQIBKn2jAn3MAgIBKIIBfIIBuwECASWaARWeASMCARqfARWjASMCARakARWkAbEBAgEUvAGkAbwBtQICAQxfgAFfvwECATlgvQJgzgICATVgmQJgnAICATRspgFs2AECATdv8gFv9wECATKaAZ8CmgG+AgIBG6EBqAGhAZACAgEZnwGpAp8BzQICARekAYIBpAGuAQIBFQ==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -260,7 +260,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="GoogleDriveUploadAttachments_1" sap:VirtualizedContainerService.HintSize="562,3666" />
+      <sap2010:ViewStateData Id="GoogleDriveUploadAttachments_1" sap:VirtualizedContainerService.HintSize="562,3626" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

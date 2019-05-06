@@ -68,6 +68,7 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="GoogleDriveLogin" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -75,6 +76,7 @@
       <Variable x:TypeArguments="x:String" Name="username" />
       <Variable x:TypeArguments="ss:SecureString" Name="password" />
     </Sequence.Variables>
+    <ui:LogMessage DisplayName="Log Message" Level="Info" Message="[&quot;GoogleDrive: Login&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_3" />
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GetAppCredentials workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\GetAppCredentials.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <OutArgument x:TypeArguments="x:String" x:Key="out_Username">[username]</OutArgument>
@@ -179,10 +181,11 @@
         </ActivityAction>
       </ui:OpenBrowser.Body>
     </ui:OpenBrowser>
-    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZUxvZ2luLnhhbWwsSQO3AQ4CAQFOBVQdAgEwVQW1ARYCAQJSTVJXAgE2UUZRXAIBNFBGUFACATJOvgFO4AECATFVqwFVwAECAS5VxQFV1AECASxbC7IBFgIBA2ANZBsCAStlDWWFAQIBKmYNaiICASVrDX0SAgEgfg2CASICARuDAQ2xARICAQRoiwFoiQICASlolAJomgICAShmTmZcAgEmaxtrKQIBIW0RexwCASOAAYsBgAHDAQIBH4ABzgGAAdQBAgEeflB+XQIBHIMBG4MBKAIBBYUBEaUBHAIBDKgBEa8BHAIBB3mkAXmdAgIBJIYBE4oBIQIBF4sBE48BJwIBE5ABE54BHgIBEZ8BE6MBLAIBD6QBE6QBsAECAQ2pAROtASwCAQquAROuAbIBAgEIiAGmAYgB1wECARqGAaQChgHIAgIBGI0BpgGNAdUBAgEWiwGNAosBmQICARScAaYBnAHcAQIBEqEBpgGhAYMCAgEQpAGAAaQBrQECAQ6rAaYBqwGDAgIBC64BgAGuAa8BAgEJ</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZUxvZ2luLnhhbWwuSgO5AQ4CAQFPBU+XAQIBOFAFVh0CATBXBbcBFgIBAk9DT2UCATlUTVRXAgE2U0ZTXAIBNFJGUlACATJQvgFQ4AECATFXqwFXwAECAS5XxQFX1AECASxdC7QBFgIBA2INZhsCAStnDWeFAQIBKmgNbCICASVtDX8SAgEggAENhAEiAgEbhQENswESAgEEaosBaokCAgEpapQCapoCAgEoaE5oXAIBJm0bbSkCASFvEX0cAgEjggGLAYIBwwECAR+CAc4BggHUAQIBHoABUIABXQIBHIUBG4UBKAIBBYcBEacBHAIBDKoBEbEBHAIBB3ukAXudAgIBJIgBE4wBIQIBF40BE5EBJwIBE5IBE6ABHgIBEaEBE6UBLAIBD6YBE6YBsAECAQ2rAROvASwCAQqwAROwAbIBAgEIigGmAYoB1wECARqIAaQCiAHIAgIBGI8BpgGPAdUBAgEWjQGNAo0BmQICARSeAaYBngHcAQIBEqMBpgGjAYMCAgEQpgGAAaYBrQECAQ6tAaYBrQGDAgIBC7ABgAGwAa8BAgEJ</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="733,91" />
       <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="733,87" />
       <sap2010:ViewStateData Id="Activate_1" sap:VirtualizedContainerService.HintSize="697,68" />
       <sap2010:ViewStateData Id="MaximizeWindow_1" sap:VirtualizedContainerService.HintSize="697,22" />
@@ -220,14 +223,14 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="733,1952" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="755,2203">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="755,2334">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="GoogleDriveLogin_1" sap:VirtualizedContainerService.HintSize="795,2283" />
+      <sap2010:ViewStateData Id="GoogleDriveLogin_1" sap:VirtualizedContainerService.HintSize="795,2414" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

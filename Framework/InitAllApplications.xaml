@@ -69,28 +69,39 @@
       <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
       <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Description: Open and initialize application as needed.&#xA;&#xA;Pre Condition: N/A&#xA;Post Condtion: Applications opened" DisplayName="Initialization Sequence" sap2010:WorkflowViewState.IdRef="Sequence_9">
     <Sequence.Variables>
-      <Variable x:TypeArguments="ui:GenericValue" Name="driveUrl" />
-      <Variable x:TypeArguments="ui:GenericValue" Name="googleAccount" />
+      <Variable x:TypeArguments="x:String" Name="driveUrl" />
+      <Variable x:TypeArguments="x:String" Name="googleAccount" />
+      <Variable x:TypeArguments="x:String" Name="googleFolder" />
+      <Variable x:TypeArguments="x:Boolean" Name="folderExists" />
     </Sequence.Variables>
     <ui:LogMessage DisplayName="Log App Initialization message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Opening applications...&quot;]" />
     <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
-        <OutArgument x:TypeArguments="ui:GenericValue">[driveUrl]</OutArgument>
+        <OutArgument x:TypeArguments="x:String">[driveUrl]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="ui:GenericValue">[in_Config("driveUrl")]</InArgument>
+        <InArgument x:TypeArguments="x:String">[in_Config("driveUrl")]</InArgument>
       </Assign.Value>
     </Assign>
     <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
       <Assign.To>
-        <OutArgument x:TypeArguments="ui:GenericValue">[googleAccount]</OutArgument>
+        <OutArgument x:TypeArguments="x:String">[googleAccount]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="ui:GenericValue">[in_Config("googleAccount")]</InArgument>
+        <InArgument x:TypeArguments="x:String">[in_Config("googleAccount")]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[googleFolder]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[in_Config("GoogleDriveFolderName")]</InArgument>
       </Assign.Value>
     </Assign>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GoogleDriveLogin workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="UI-workflows\GoogleDriveLogin.xaml">
@@ -100,15 +111,23 @@
         <OutArgument x:TypeArguments="ui:Browser" x:Key="out_browserWindow">[out_browserWindow]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XEZyYW1ld29ya1xJbml0QWxsQXBwbGljYXRpb25zLnhhbWwOSgNoDgIBAU8FT68BAgESUAVXDgIBDVgFXw4CAQhgBWYdAgECT4UBT6wBAgETVTdVTgIBEFI4UkICAQ5dN11TAgELWjhaRwIBCWRNZGACAQZiTWJcAgEFY0RjTgIBBGC9AWDhAQIBAw==</sads:DebugSymbol.Symbol>
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GoogleDriveSearchFolder workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="UI-workflows\GoogleDriveSearchFolder.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="ui:Browser" x:Key="in_browserWindow">[out_browserWindow]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_folderName">[googleFolder]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XEZyYW1ld29ya1xJbml0QWxsQXBwbGljYXRpb25zLnhhbWwVSwN5DgIBAVIFUq8BAgEfUwVaDgIBGlsFYg4CARVjBWoOAgEQawVxHQIBCHIFdx0CAQJShQFSrAECASBYMFhHAgEdVTFVOwIBG2AwYEwCARhdMV1AAgEWaDBoVAIBE2UxZT8CARFvTW9gAgEObU1tXAIBDG5Ebk4CAQprvQFr4QECAQl1RnVUAgEGdEt0XgIBBHLEAXLvAQIBAw==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,91" />
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314,60" />
       <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="314,60" />
       <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
-      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="336,614">
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_2" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="336,841">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -116,7 +135,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Initialization_1" sap:VirtualizedContainerService.HintSize="376,694" />
+      <sap2010:ViewStateData Id="Initialization_1" sap:VirtualizedContainerService.HintSize="376,921" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

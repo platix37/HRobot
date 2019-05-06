@@ -61,22 +61,31 @@
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Description: Here all working applications will be soft closed&#xA;&#xA;Pre Condition: N/A&#xA;Post Condtion: Applications closed" DisplayName="Normal App Closing Sequence" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Closing applications...&quot;]" />
-    <ui:CloseApplication DisplayName="Close Application" sap2010:WorkflowViewState.IdRef="CloseApplication_1">
-      <ui:CloseApplication.Target>
-        <ui:Target ClippingRegion="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" Element="[in_browserWindow]" WaitForReady="INTERACTIVE" />
-      </ui:CloseApplication.Target>
-    </ui:CloseApplication>
-    <sads:DebugSymbol.Symbol>dzRDOlxQbGF0b25cSFJvYm90XEZyYW1ld29ya1xDbG9zZUFsbEFwcGxpY2F0aW9ucy54YW1sBUIDSg4CAQFDBUOcAQIBBUQFSBsCAQJDckOZAQIBBkZfRnMCAQM=</sads:DebugSymbol.Symbol>
+    <If Condition="[NOT in_browserWindow is Nothing]" DisplayName="Close Browser" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <ui:CloseApplication DisplayName="Close Application" sap2010:WorkflowViewState.IdRef="CloseApplication_1">
+          <ui:CloseApplication.Target>
+            <ui:Target ClippingRegion="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" Element="[in_browserWindow]" WaitForReady="INTERACTIVE" />
+          </ui:CloseApplication.Target>
+        </ui:CloseApplication>
+      </If.Then>
+    </If>
+    <sads:DebugSymbol.Symbol>dzRDOlxQbGF0b25cSFJvYm90XEZyYW1ld29ya1xDbG9zZUFsbEFwcGxpY2F0aW9ucy54YW1sB0YDUg4CAQFHBUecAQIBB0gFUAoCAQJHckeZAQIBCEgTSDYCAQNKCU4fAgEETGNMdwIBBQ==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="464,91" />
       <sap2010:ViewStateData Id="CloseApplication_1" sap:VirtualizedContainerService.HintSize="314,68" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,410">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,216" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="486,543">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -84,7 +93,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CloseAllApplications_1" sap:VirtualizedContainerService.HintSize="376,490" />
+      <sap2010:ViewStateData Id="CloseAllApplications_1" sap:VirtualizedContainerService.HintSize="526,623" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

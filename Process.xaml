@@ -149,6 +149,7 @@
                       <ui:InvokeWorkflowFile.Arguments>
                         <OutArgument x:TypeArguments="x:String" x:Key="out_personName">[personName]</OutArgument>
                         <OutArgument x:TypeArguments="x:Boolean" x:Key="out_isValidData">[isValidData]</OutArgument>
+                        <InOutArgument x:TypeArguments="scg:List(x:String)" x:Key="io_requesterMessages">[requesterMessages]</InOutArgument>
                       </ui:InvokeWorkflowFile.Arguments>
                     </ui:InvokeWorkflowFile>
                     <FlowStep.Next>
@@ -206,7 +207,7 @@
     <x:Reference>__ReferenceID5</x:Reference>
     <x:Reference>__ReferenceID6</x:Reference>
     <x:Reference>__ReferenceID7</x:Reference>
-    <sads:DebugSymbol.Symbol>dx1DOlxQbGF0b25cSFJvYm90XFByb2Nlc3MueGFtbCxLA9IBDwIBAVoJhAEUAgEphwENjwElAgEekQE/kQFTAgEcqQElrwE9AgEUlAEVmQEtAgEOmwFHmwFaAgEMnQFLnQFaAgEKoAEhpgE5AgECWwtiFAIBQ2MLahQCAT5rC3IUAgE5cwt6FAIBNHsLe/ABAgEvfAuDARQCASqKAVeKAWkCASeMAWOMAXgCASWLAU6LAVoCASSJAU+JAVgCASKHAcUBhwHrAQIBIY0BYo0BdQIBH6wBZ6wBdAIBGqsBaasBfwIBGKkB1gGpAfUBAgEXrQF6rQGNAQIBFZcBWpcBZwIBEpQByQGUAe8BAgERlgFYlgFkAgEPpAFvpAGEAQIBCKMBYqMBbgIBBqIBZ6IBeQIBBKAB5QGgAZUCAgEDYEBgVgIBRl1BXVQCAURoNmhOAgFBZTdlTQIBP3A2cFICATxtN21GAgE6eDZ4RwIBN3U3dUQCATV7QntXAgEye7oBe+0BAgEwgQE9gQFWAgEtfj5+SgIBKw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dx1DOlxQbGF0b25cSFJvYm90XFByb2Nlc3MueGFtbC1LA9MBDwIBAVoJhAEUAgErhwENjwElAgEgkQE/kQFTAgEeqgElsAE9AgEWlAEVmgEtAgEOnAFHnAFaAgEMngFLngFaAgEKoQEhpwE5AgECWwtiFAIBRWMLahQCAUBrC3IUAgE7cwt6FAIBNnsLe/ABAgExfAuDARQCASyKAVeKAWkCASmMAWOMAXgCASeLAU6LAVoCASaJAU+JAVgCASSHAcUBhwHrAQIBI40BYo0BdQIBIa0BZ60BdAIBHKwBaawBfwIBGqoB1gGqAfUBAgEZrgF6rgGNAQIBF5cBWpcBZwIBFJQByQGUAe8BAgETmAFqmAF9AgERlgFYlgFkAgEPpQFvpQGEAQIBCKQBYqQBbgIBBqMBZ6MBeQIBBKEB5QGhAZUCAgEDYEBgVgIBSF1BXVQCAUZoNmhOAgFDZTdlTQIBQXA2cFICAT5tN21GAgE8eDZ4RwIBOXU3dUQCATd7QntXAgE0e7oBe+0BAgEygQE9gQFWAgEvfj5+SgIBLQ==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -230,14 +231,14 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="314,87">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_4" sap:VirtualizedContainerService.HintSize="314,87">
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_4" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -340,7 +341,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ProcessTransaction_1" sap:VirtualizedContainerService.HintSize="986,1012" />
+      <sap2010:ViewStateData Id="ProcessTransaction_1" sap:VirtualizedContainerService.HintSize="986,972" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

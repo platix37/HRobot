@@ -11,6 +11,7 @@
   <x:Members>
     <x:Property Name="out_personName" Type="OutArgument(x:String)" />
     <x:Property Name="out_isValidData" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="io_requesterMessages" Type="InOutArgument(scg:List(x:String))" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -64,10 +65,10 @@
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ValidateData" sap2010:WorkflowViewState.IdRef="Sequence_1" sads:DebugSymbol.Symbol="dzVDOlxQbGF0b25cSFJvYm90XERvY3VtZW50LXdvcmtmbG93c1xWYWxpZGF0ZURhdGEueGFtbAFGA0aKAQIBAQ==" />
+  <Sequence DisplayName="ValidateData" sap2010:WorkflowViewState.IdRef="Sequence_1" sads:DebugSymbol.Symbol="dzVDOlxQbGF0b25cSFJvYm90XERvY3VtZW50LXdvcmtmbG93c1xWYWxpZGF0ZURhdGEueGFtbAFHA0eKAQIBAQ==" />
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="200,99">
@@ -77,7 +78,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ValidateData_1" sap:VirtualizedContainerService.HintSize="240,219" />
+      <sap2010:ViewStateData Id="ValidateData_1" sap:VirtualizedContainerService.HintSize="240,179" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

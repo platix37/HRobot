@@ -67,6 +67,7 @@
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
@@ -75,72 +76,128 @@
       <Variable x:TypeArguments="x:Boolean" Name="validAttachments" />
       <Variable x:TypeArguments="x:Boolean" Name="isValidTemplate" />
       <Variable x:TypeArguments="x:Boolean" Name="isValidData" />
+      <Variable x:TypeArguments="x:String" Name="requesterName" />
+      <Variable x:TypeArguments="x:String" Name="requesterMailAddress" />
+      <Variable x:TypeArguments="scg:List(x:String)" Name="requesterMessages" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="tempFolder" />
+      <Variable x:TypeArguments="x:String" Name="mailSubject" />
+      <Variable x:TypeArguments="scg:List(x:String)" Name="attachmentsPathList" />
     </Flowchart.Variables>
     <Flowchart.StartNode>
-      <x:Reference>__ReferenceID6</x:Reference>
+      <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+        <Sequence DisplayName="Init Sequence" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+            <Assign.To>
+              <OutArgument x:TypeArguments="scg:List(x:String)">[requesterMessages]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="scg:List(x:String)">[new List( of String)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[requesterMailAddress]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[in_mail.Sender.Address]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[requesterName]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[in_mail.Sender.DisplayName]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_5">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[mailSubject]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[in_mail.Subject]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <AddToCollection x:TypeArguments="x:String" Collection="[requesterMessages]" DisplayName="Requester Messages begin" sap2010:WorkflowViewState.IdRef="AddToCollection`1_1" Item="[&quot;Dear &quot; +requesterName+ &quot;,&quot;]" />
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="ui:GenericValue">[tempFolder]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="ui:GenericValue">[in_Config("tempFolder")]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+        <FlowStep.Next>
+          <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke CheckAttachments workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mail-workflows\CheckAttachments.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="snm:MailMessage" x:Key="in_mail">[in_mail]</InArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_validAttachments">[validAttachments]</OutArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_tempFolder">[tempFolder]</InArgument>
+                <OutArgument x:TypeArguments="scg:List(x:String)" x:Key="out_attachmentsPathList">[attachmentsPathList]</OutArgument>
+                <InOutArgument x:TypeArguments="scg:List(x:String)" x:Key="io_requesterMessages">[requesterMessages]</InOutArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <FlowStep.Next>
+              <FlowDecision x:Name="__ReferenceID3" Condition="[validAttachments]" DisplayName="Valid Attachments" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                <FlowDecision.True>
+                  <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ValidateData workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Document-workflows\ValidateData.xaml">
+                      <ui:InvokeWorkflowFile.Arguments>
+                        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                      </ui:InvokeWorkflowFile.Arguments>
+                    </ui:InvokeWorkflowFile>
+                    <FlowStep.Next>
+                      <FlowDecision x:Name="__ReferenceID5" Condition="[isValidTemplate]" DisplayName="Is Valid Template" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                        <FlowDecision.True>
+                          <FlowDecision x:Name="__ReferenceID6" Condition="[isValidData]" DisplayName="Is Valid Data" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                            <FlowDecision.False>
+                              <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+                                <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SendReply workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Mail-workflows\SendReply.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_requesterMail">[requesterMailAddress]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_mailSubject">[mailSubject]</InArgument>
+                                    <InOutArgument x:TypeArguments="scg:List(x:String)" x:Key="io_requesterMessages">[requesterMessages]</InOutArgument>
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                </ui:InvokeWorkflowFile>
+                              </FlowStep>
+                            </FlowDecision.False>
+                          </FlowDecision>
+                        </FlowDecision.True>
+                        <FlowDecision.False>
+                          <x:Reference>__ReferenceID0</x:Reference>
+                        </FlowDecision.False>
+                      </FlowDecision>
+                    </FlowStep.Next>
+                  </FlowStep>
+                </FlowDecision.True>
+                <FlowDecision.False>
+                  <x:Reference>__ReferenceID0</x:Reference>
+                </FlowDecision.False>
+              </FlowDecision>
+            </FlowStep.Next>
+          </FlowStep>
+        </FlowStep.Next>
+      </FlowStep>
     </Flowchart.StartNode>
-    <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_1">
-      <Sequence DisplayName="Init Sequence" sap2010:WorkflowViewState.IdRef="Sequence_2" />
-      <FlowStep.Next>
-        <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_3">
-          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke CheckAttachments workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mail-workflows\CheckAttachments.xaml">
-            <ui:InvokeWorkflowFile.Arguments>
-              <scg:Dictionary x:TypeArguments="x:String, Argument" />
-            </ui:InvokeWorkflowFile.Arguments>
-          </ui:InvokeWorkflowFile>
-          <FlowStep.Next>
-            <FlowDecision x:Name="__ReferenceID2" Condition="[validAttachments]" DisplayName="Valid Attachments" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
-              <FlowDecision.True>
-                <FlowStep x:Name="__ReferenceID3">
-                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ValidateData workflow" UnSafe="False" WorkflowFileName="Document-workflows\ValidateData.xaml">
-                    <ui:InvokeWorkflowFile.Arguments>
-                      <scg:Dictionary x:TypeArguments="x:String, Argument" />
-                    </ui:InvokeWorkflowFile.Arguments>
-                    <sap2010:WorkflowViewState.IdRef>InvokeWorkflowFile_3</sap2010:WorkflowViewState.IdRef>
-                  </ui:InvokeWorkflowFile>
-                  <FlowStep.Next>
-                    <FlowDecision x:Name="__ReferenceID4" Condition="[isValidTemplate]" DisplayName="Is Valid Template">
-                      <FlowDecision.True>
-                        <FlowDecision x:Name="__ReferenceID5" Condition="[isValidData]" DisplayName="Is Valid Data">
-                          <FlowDecision.False>
-                            <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_2">
-                              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SendReply workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Mail-workflows\SendReply.xaml">
-                                <ui:InvokeWorkflowFile.Arguments>
-                                  <scg:Dictionary x:TypeArguments="x:String, Argument" />
-                                </ui:InvokeWorkflowFile.Arguments>
-                              </ui:InvokeWorkflowFile>
-                            </FlowStep>
-                          </FlowDecision.False>
-                          <sap2010:WorkflowViewState.IdRef>FlowDecision_2</sap2010:WorkflowViewState.IdRef>
-                        </FlowDecision>
-                      </FlowDecision.True>
-                      <FlowDecision.False>
-                        <x:Reference>__ReferenceID0</x:Reference>
-                      </FlowDecision.False>
-                      <sap2010:WorkflowViewState.IdRef>FlowDecision_3</sap2010:WorkflowViewState.IdRef>
-                    </FlowDecision>
-                  </FlowStep.Next>
-                  <sap2010:WorkflowViewState.IdRef>FlowStep_4</sap2010:WorkflowViewState.IdRef>
-                </FlowStep>
-              </FlowDecision.True>
-              <FlowDecision.False>
-                <x:Reference>__ReferenceID0</x:Reference>
-              </FlowDecision.False>
-            </FlowDecision>
-          </FlowStep.Next>
-        </FlowStep>
-      </FlowStep.Next>
-    </FlowStep>
     <x:Reference>__ReferenceID1</x:Reference>
-    <x:Reference>__ReferenceID0</x:Reference>
     <x:Reference>__ReferenceID2</x:Reference>
+    <x:Reference>__ReferenceID0</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
     <x:Reference>__ReferenceID4</x:Reference>
     <x:Reference>__ReferenceID5</x:Reference>
-    <sads:DebugSymbol.Symbol>dx1DOlxQbGF0b25cSFJvYm90XFByb2Nlc3MueGFtbAtJA40BDwIBAVMHU1wCAQ5WC1ojAgEMXD1cUQIBCmsfbzcCAQhfE2QrAgEGZkVmWAIBBGhJaFgCAQJWwwFW6QECAQ1r0AFr7wECAQlfkAFftgECAQc=</sads:DebugSymbol.Symbol>
+    <x:Reference>__ReferenceID6</x:Reference>
+    <sads:DebugSymbol.Symbol>dx1DOlxQbGF0b25cSFJvYm90XFByb2Nlc3MueGFtbCVKA8ABDwIBAVgJggEUAgEdhQENjQElAgESjwE/jwFTAgEQnQEhowE5AgEIkgEVlgEtAgEGmAFHmAFaAgEEmgFLmgFaAgECWQtgFAIBN2ELaBQCATJpC3AUAgEtcQt4FAIBKHkLefABAgEjeguBARQCAR6IAVeIAWkCARuKAWOKAXgCARmJAU6JAVoCARiHAU+HAVgCARaFAcUBhQHrAQIBFYsBYosBdQIBE6ABY6ABcAIBDp8BZZ8BewIBDJ0B0gGdAfEBAgELoQF2oQGJAQIBCZIByQGSAe8BAgEHXkBeVgIBOltBW1QCAThmNmZOAgE1YzdjTQIBM242blICATBrN2tGAgEudjZ2RwIBK3M3c0QCASl5QnlXAgEmeboBee0BAgEkfz1/VgIBIXw+fEoCAR8=</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="AddToCollection`1_1" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="242,60" />
       <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -148,7 +205,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -248,7 +305,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ProcessTransaction_1" sap:VirtualizedContainerService.HintSize="986,972" />
+      <sap2010:ViewStateData Id="ProcessTransaction_1" sap:VirtualizedContainerService.HintSize="986,1012" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

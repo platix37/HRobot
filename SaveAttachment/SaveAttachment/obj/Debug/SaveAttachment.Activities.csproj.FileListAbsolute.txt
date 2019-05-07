@@ -1,0 +1,6 @@
+C:\Platon\C#\SaveAttachment\SaveAttachment\obj\Debug\SaveAttachment.Activities.csprojAssemblyReference.cache
+C:\Platon\C#\SaveAttachment\SaveAttachment\obj\Debug\SaveAttachment.Activities.csproj.CoreCompileInputs.cache
+C:\Platon\C#\SaveAttachment\SaveAttachment\bin\Debug\SaveAttachment.dll
+C:\Platon\C#\SaveAttachment\SaveAttachment\bin\Debug\SaveAttachment.pdb
+C:\Platon\C#\SaveAttachment\SaveAttachment\obj\Debug\SaveAttachment.dll
+C:\Platon\C#\SaveAttachment\SaveAttachment\obj\Debug\SaveAttachment.pdb

@@ -68,7 +68,6 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="GoogleDriveUploadAttachments" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -84,6 +83,12 @@
               <Variable x:TypeArguments="x:Boolean" Name="folderExists" />
               <Variable x:TypeArguments="x:Boolean" Name="isComplete" />
             </Sequence.Variables>
+            <ui:Activate DelayBefore="{x:Null}" DelayMS="{x:Null}">
+              <ui:Activate.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
+              </ui:Activate.Target>
+              <sap2010:WorkflowViewState.IdRef>Activate_1</sap2010:WorkflowViewState.IdRef>
+            </ui:Activate>
             <ui:UiElementExists DisplayName="Element Exists Folder" Exists="[folderExists]" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
               <ui:UiElementExists.Target>
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="fb87a1283b1c8b48768308ab96642f6b" Selector="[&quot;&lt;webctrl aaname='&quot; +in_personName+ &quot;' parentid='*' tag='DIV' /&gt;&quot;]" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
@@ -200,11 +205,12 @@
       </ui:SendHotkey.Target>
     </ui:SendHotkey>
     <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;GoogleDrive: Attachments upload done&quot;]" />
-    <sads:DebugSymbol.Symbol>dz9DOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZVVwbG9hZEF0dGFjaG1lbnRzLnhhbWw3SgPMAQ4CAQFLBUukAQIBQ0wFxAEXAgEGxQEFyQEVAgEEygEFygGpAQIBAktyS6EBAgFETHNMhwECAUFSC8EBFgIBB8UB5AHFAeoBAgEFygFyygGmAQIBA1cNWyICATtcDXYSAgEtdw2DARgCASOEAQ2SARwCAR6TAQ2oARoCARKpAQ2tASICAQ2uAQ3AARICAQhZiwFZ6gECAT9Z9QFZ+wECAT5XTFdcAgE8XBtcKwIBLl4RdBwCATB4D3wfAgErfQ+BAR0CASeCAQ+CAb4BAgEkhAG3AoQByAICASCEAZMChAGWAgIBH5ABoAGQAdIBAgEikwGYAZMBrAECARyZAROlAR4CAROrAYsBqwG8AQIBEasBxwGrAc4BAgEQqQFMqQFaAgEOrgEbrgEpAgEJsAERvgEcAgELXxNfwgECAThgE24iAgEzbxNzIwIBMXjuAXjxAQIBLH+iAX/KAQIBKn2jAn3MAgIBKIIBfIIBuwECASWaARWeASMCARqfARWjASMCARakARWkAbEBAgEUvAGkAbwBtQICAQxfgAFfvwECATlgvQJgzgICATVgmQJgnAICATRspgFs2AECATdv8gFv9wECATKaAZ8CmgG+AgIBG6EBqAGhAZACAgEZnwGpAp8BzQICARekAYIBpAGuAQIBFQ==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz9DOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZVVwbG9hZEF0dGFjaG1lbnRzLnhhbWw4SQPRAQ4CAQFKBUqkAQIBRksFyQEXAgEGygEFzgEVAgEEzwEFzwGpAQIBAkpySqEBAgFHS3NLhwECAURRC8YBFgIBB8oB5AHKAeoBAgEFzwFyzwGmAQIBA1YNWxsCAUNcDWAiAgE9YQ17EgIBLnwNiAEYAgEkiQENlwEcAgEemAENrQEaAgESrgENsgEiAgENswENxQESAgEIXosBXuoBAgFBXvUBXvsBAgFAXExcXAIBPmEbYSsCAS9jEXkcAgExfQ+BAR8CASyCAQ+GAR0CASiHAQ+HAb4BAgEliQG3AokByAICASGJAZMCiQGWAgIBIJUBoAGVAdIBAgEjmAGYAZgBrAECARyeAROqAR4CAROwAYsBsAG8AQIBEbABxwGwAc4BAgEQrgFMrgFaAgEOswEbswEpAgEJtQERwwEcAgELZBNkwgECATplE3MiAgE0dBN4IwIBMn3uAX3xAQIBLYQBogGEAcoBAgErggGjAoIBzAICASmHAXyHAbsBAgEmnwEVowEjAgEapAEVqAEjAgEWqQEVqQGxAQIBFMEBpAHBAbUCAgEMZIABZL8BAgE7Zb0CZc4CAgE3ZZkCZZwCAgE2caYBcdgBAgE5dPIBdPcBAgEznwGfAp8BvgICARumAagBpgGQAgIBGaQBqQKkAc0CAgEXqQGCAakBrgECARU=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="500,91" />
+      <sap2010:ViewStateData Id="Activate_1" sap:VirtualizedContainerService.HintSize="464,68" />
       <sap2010:ViewStateData Id="UiElementExists_1" sap:VirtualizedContainerService.HintSize="464,106" />
       <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="314,91" />
       <sap2010:ViewStateData Id="ClickText_1" sap:VirtualizedContainerService.HintSize="314,134" />
@@ -243,24 +249,24 @@
       <sap2010:ViewStateData Id="UiElementExists_2" sap:VirtualizedContainerService.HintSize="464,106" />
       <sap2010:ViewStateData Id="Click_7" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,253" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="486,2858">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="486,2966">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="BrowserScope_1" sap:VirtualizedContainerService.HintSize="500,3004" />
+      <sap2010:ViewStateData Id="BrowserScope_1" sap:VirtualizedContainerService.HintSize="500,3112" />
       <sap2010:ViewStateData Id="SendHotkey_4" sap:VirtualizedContainerService.HintSize="500,116" />
       <sap2010:ViewStateData Id="LogMessage_6" sap:VirtualizedContainerService.HintSize="500,91" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="522,3546">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="522,3654">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="GoogleDriveUploadAttachments_1" sap:VirtualizedContainerService.HintSize="562,3626" />
+      <sap2010:ViewStateData Id="GoogleDriveUploadAttachments_1" sap:VirtualizedContainerService.HintSize="562,3734" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

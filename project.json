@@ -10,7 +10,9 @@
     "UiPath.UIAutomation.Activities": "[19.4.1]",
     "HRobot.Activities": "[1.0.0]",
     "UiPath.Database.Activities": "[1.2.6863.32528]",
-    "UiPath.PDF.Activities": "[2.0.0]"
+    "UiPath.PDF.Activities": "[2.0.0]",
+    "UiPath.IntelligentOCR.Activities": "[2.0.0]",
+    "Microsoft.Activities.Extensions": "[2.0.6.9]"
   },
   "schemaVersion": "3.2",
   "studioVersion": "18.4.4.0",

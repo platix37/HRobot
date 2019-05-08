@@ -69,7 +69,6 @@
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Flowchart sap2010:WorkflowViewState.IdRef="Flowchart_1">
@@ -80,10 +79,11 @@
       <Variable x:TypeArguments="x:String" Name="requesterName" />
       <Variable x:TypeArguments="x:String" Name="requesterMailAddress" />
       <Variable x:TypeArguments="scg:List(x:String)" Name="requesterMessages" />
-      <Variable x:TypeArguments="ui:GenericValue" Name="tempFolder" />
+      <Variable x:TypeArguments="x:String" Name="tempFolder" />
       <Variable x:TypeArguments="x:String" Name="mailSubject" />
       <Variable x:TypeArguments="scg:List(x:String)" Name="attachmentsPathList" />
       <Variable x:TypeArguments="x:String" Name="personName" />
+      <Variable x:TypeArguments="x:String" Name="pdfPath" />
     </Flowchart.Variables>
     <Flowchart.StartNode>
       <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_1">
@@ -123,10 +123,10 @@
           <AddToCollection x:TypeArguments="x:String" Collection="[requesterMessages]" DisplayName="Requester Messages begin" sap2010:WorkflowViewState.IdRef="AddToCollection`1_1" Item="[&quot;Dear &quot; +requesterName+ &quot;,&quot;]" />
           <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
-              <OutArgument x:TypeArguments="ui:GenericValue">[tempFolder]</OutArgument>
+              <OutArgument x:TypeArguments="x:String">[tempFolder]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="ui:GenericValue">[in_Config("tempFolder")]</InArgument>
+              <InArgument x:TypeArguments="x:String">[in_Config("tempFolder")]</InArgument>
             </Assign.Value>
           </Assign>
         </Sequence>
@@ -139,6 +139,7 @@
                 <InArgument x:TypeArguments="x:String" x:Key="in_tempFolder">[tempFolder]</InArgument>
                 <OutArgument x:TypeArguments="scg:List(x:String)" x:Key="out_attachmentsPathList">[attachmentsPathList]</OutArgument>
                 <InOutArgument x:TypeArguments="scg:List(x:String)" x:Key="io_requesterMessages">[requesterMessages]</InOutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_pdfPath">[pdfPath]</OutArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <FlowStep.Next>
@@ -150,6 +151,8 @@
                         <OutArgument x:TypeArguments="x:String" x:Key="out_personName">[personName]</OutArgument>
                         <OutArgument x:TypeArguments="x:Boolean" x:Key="out_isValidData">[isValidData]</OutArgument>
                         <InOutArgument x:TypeArguments="scg:List(x:String)" x:Key="io_requesterMessages">[requesterMessages]</InOutArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_pdfPath">[pdfPath]</InArgument>
+                        <OutArgument x:TypeArguments="x:Boolean" x:Key="out_isValidTemplate">[isValidTemplate]</OutArgument>
                       </ui:InvokeWorkflowFile.Arguments>
                     </ui:InvokeWorkflowFile>
                     <FlowStep.Next>
@@ -207,7 +210,7 @@
     <x:Reference>__ReferenceID5</x:Reference>
     <x:Reference>__ReferenceID6</x:Reference>
     <x:Reference>__ReferenceID7</x:Reference>
-    <sads:DebugSymbol.Symbol>dx1DOlxQbGF0b25cSFJvYm90XFByb2Nlc3MueGFtbC1LA9MBDwIBAVoJhAEUAgErhwENjwElAgEgkQE/kQFTAgEeqgElsAE9AgEWlAEVmgEtAgEOnAFHnAFaAgEMngFLngFaAgEKoQEhpwE5AgECWwtiFAIBRWMLahQCAUBrC3IUAgE7cwt6FAIBNnsLe/ABAgExfAuDARQCASyKAVeKAWkCASmMAWOMAXgCASeLAU6LAVoCASaJAU+JAVgCASSHAcUBhwHrAQIBI40BYo0BdQIBIa0BZ60BdAIBHKwBaawBfwIBGqoB1gGqAfUBAgEZrgF6rgGNAQIBF5cBWpcBZwIBFJQByQGUAe8BAgETmAFqmAF9AgERlgFYlgFkAgEPpQFvpQGEAQIBCKQBYqQBbgIBBqMBZ6MBeQIBBKEB5QGhAZUCAgEDYEBgVgIBSF1BXVQCAUZoNmhOAgFDZTdlTQIBQXA2cFICAT5tN21GAgE8eDZ4RwIBOXU3dUQCATd7QntXAgE0e7oBe+0BAgEygQE9gQFWAgEvfj5+SgIBLQ==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dx1DOlxQbGF0b25cSFJvYm90XFByb2Nlc3MueGFtbDBKA9YBDwIBAVoJhAEUAgEyhwENkAElAgEkkgE/kgFTAgEirQElswE9AgEalQEVnQEtAgEOnwFHnwFaAgEMoQFLoQFaAgEKpAEhqgE5AgECWwtiFAIBTGMLahQCAUdrC3IUAgFCcwt6FAIBPXsLe/ABAgE4fAuDARQCATOKAVeKAWkCATCOAU2OAVYCAS6MAWOMAXgCASyLAU6LAVoCASqJAU+JAVgCASiHAcUBhwHrAQIBJ40BYo0BdQIBJbABZ7ABdAIBIK8Baa8BfwIBHq0B1gGtAfUBAgEdsQF6sQGNAQIBG5gBWpgBZwIBGJsBXpsBbwIBFpUByQGVAe8BAgEVmgFTmgFcAgETmQFqmQF9AgERlwFYlwFkAgEPqAFvqAGEAQIBCKcBYqcBbgIBBqYBZ6YBeQIBBKQB5QGkAZUCAgEDYEBgVgIBT11BXVQCAU1oNmhOAgFKZTdlTQIBSHA2cFICAUVtN21GAgFDeDZ4RwIBQHU3dUQCAT57QntXAgE7e7oBe+0BAgE5gQE2gQFPAgE2fjd+QwIBNA==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -341,7 +344,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ProcessTransaction_1" sap:VirtualizedContainerService.HintSize="986,972" />
+      <sap2010:ViewStateData Id="ProcessTransaction_1" sap:VirtualizedContainerService.HintSize="986,1012" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

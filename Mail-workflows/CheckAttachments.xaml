@@ -17,6 +17,7 @@
     <x:Property Name="in_tempFolder" Type="InArgument(x:String)" />
     <x:Property Name="out_attachmentsPathList" Type="OutArgument(scg:List(x:String))" />
     <x:Property Name="io_requesterMessages" Type="InOutArgument(scg:List(x:String))" />
+    <x:Property Name="out_pdfPath" Type="OutArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -72,10 +73,14 @@
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
       <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>UiPath.PDF</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="CheckAttachments" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:Boolean" Name="pdfExists" />
+    </Sequence.Variables>
     <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Check attachments&quot;]" />
     <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
@@ -89,7 +94,6 @@
       <If.Then>
         <Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
           <Sequence.Variables>
-            <Variable x:TypeArguments="x:Boolean" Name="pdfExists" />
             <Variable x:TypeArguments="x:Boolean" Name="jpgExists" />
           </Sequence.Variables>
           <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
@@ -127,6 +131,14 @@
                           </Assign.Value>
                         </Assign>
                         <sa:SaveAttachment Attachment="[att]" DisplayName="Save attachment" sap2010:WorkflowViewState.IdRef="SaveAttachment_1" Path="[in_tempFolder]" />
+                        <Assign sap2010:WorkflowViewState.IdRef="Assign_8">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[out_pdfPath]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[in_tempFolder + att.Name]</InArgument>
+                          </Assign.Value>
+                        </Assign>
                         <AddToCollection x:TypeArguments="x:String" Collection="[out_attachmentsPathList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_3" Item="[in_tempFolder + att.Name]" />
                         <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;PDF attachment saved&quot;]" />
                       </Sequence>
@@ -144,7 +156,7 @@
                           </Assign.Value>
                         </Assign>
                         <sa:SaveAttachment Attachment="[att]" DisplayName="Save attachment" sap2010:WorkflowViewState.IdRef="SaveAttachment_2" Path="[in_tempFolder]" />
-                        <AddToCollection x:TypeArguments="x:String" Collection="[out_attachmentsPathList]" DisplayName="Add To Collection" Item="[in_tempFolder + att.Name]" sap2010:WorkflowViewState.IdRef="AddToCollection`1_4" />
+                        <AddToCollection x:TypeArguments="x:String" Collection="[out_attachmentsPathList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_4" Item="[in_tempFolder + att.Name]" />
                         <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;JPG attachment saved&quot;]" />
                       </Sequence>
                     </If.Then>
@@ -161,14 +173,6 @@
           <If Condition="[NOT pdfExists]" DisplayName="If - no PDF file is attached" sap2010:WorkflowViewState.IdRef="If_5">
             <If.Then>
               <Sequence sap2010:WorkflowViewState.IdRef="Sequence_7">
-                <Assign sap2010:WorkflowViewState.IdRef="Assign_7">
-                  <Assign.To>
-                    <OutArgument x:TypeArguments="x:Boolean">[out_validAttachments]</OutArgument>
-                  </Assign.To>
-                  <Assign.Value>
-                    <InArgument x:TypeArguments="x:Boolean">False</InArgument>
-                  </Assign.Value>
-                </Assign>
                 <AddToCollection x:TypeArguments="x:String" Collection="[io_requesterMessages]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_2" Item="Please note that no PDF file is attached to the mail. There must be at least a PDF file. The request will be rejected. " />
                 <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;No PDF file attached for mail with Subject: &quot; +in_mail.Subject]" />
               </Sequence>
@@ -191,8 +195,17 @@
         </Sequence>
       </If.Else>
     </If>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_9">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Boolean">[out_validAttachments]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Boolean">[pdfExists]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Attachments valid? - &quot; +out_validAttachments.ToString]" />
     <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Attachments checked&quot;]" />
-    <sads:DebugSymbol.Symbol>dzVDOlxQbGF0b25cSFJvYm90XE1haWwtd29ya2Zsb3dzXENoZWNrQXR0YWNobWVudHMueGFtbEdOA8QBDgIBAU8FT5YBAgFkUAVXDgIBYFgFwQEKAgEEwgEFwgGYAQIBAk9yT5MBAgFlVTpVUAIBY1I7UlQCAWFYE1g4AgEFWgmxARQCARO0AQm/ARQCAQfCAXLCAZUBAgEDXwtmFAIBXGcLbhQCAVhvC6ABGAIBI6EBC7ABEAIBFLUBC7wBFAIBD70BC70BtAICAQu+AQu+AcIBAgEIZDdkPAIBX2E4YUMCAV1sN2w8AgFbaThpQwIBWW+cAW+zAQIBVnURnQEcAgEkoQEZoQEqAgEVowEPrgEaAgEXugE3ugE8AgEStwE4twFOAgEQvQFCvQFaAgENvQG2Ab0BsQICAQy+AXi+Ab8BAgEJdhOGARgCAUCHAROXARgCASqYAROcARgCASWkARGrARoCAR+sARGsAbgCAgEbrQERrQHOAQIBGHYhdmECAUF4F4QBIgIBRIcBIYcBYQIBK4kBF5UBIgIBLpgBIZgBPAIBJpoBF5oBTQIBKakBPakBQgIBIqYBPqYBVAIBIKwBSKwBYAIBHawBvAGsAbUCAgEcrQF+rQHLAQIBGXkZgAEiAgFSgQEZgQGpAQIBTYIBGYIB5gECAUeDARmDAa0BAgFFigEZkQEiAgE8kgEZkgGpAQIBN5MBGZMB5gECATGUARmUAa0BAgEvfkV+SQIBVXtGe1ECAVOBAZUBgQGmAQIBUIEBN4EBPgIBToIBUIIBawIBS4IBxwGCAeMBAgFIgwGGAYMBqgECAUaPAUWPAUkCAT+MAUaMAVECAT2SAZUBkgGmAQIBOpIBN5IBPgIBOJMBUJMBawIBNZMBkQGTAa0BAgEylAGGAZQBqgECATA=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzVDOlxQbGF0b25cSFJvYm90XE1haWwtd29ya2Zsb3dzXENoZWNrQXR0YWNobWVudHMueGFtbExQA9EBDgIBAVQFVJYBAgFuVQVcDgIBal0FxQEKAgEMxgEFzQEOAgEHzgEFzgG5AQIBBM8BBc8BmAECAQJUclSTAQIBb1o6WlACAW1XO1dUAgFrXRNdOAIBDV8JtQEUAgEbuAEJwwEUAgEPywExywE8AgEKyAEyyAFIAgEIzgFyzgG2AQIBBc8Bcs8BlQECAQNjC2oUAgFmawtyFAIBYnMLrAEYAgEnrQELtAEQAgEcuQELwAEUAgEXwQELwQG0AgIBE8IBC8IBwgECARBoN2g8AgFpZThlQwIBZ3A3cDwCAWVtOG1DAgFjc5wBc7MBAgFgeRGpARwCASitARmtASoCAR2vAQ+yARoCAR++ATe+ATwCARq7ATi7AU4CARjBAULBAVoCARXBAbYBwQGxAgIBFMIBeMIBvwECARF6E5IBGAIBRJMBE6MBGAIBLqQBE6gBGAIBKbABEbABuAICASOxARGxAc4BAgEgeiF6YQIBRXwXkAEiAgFIkwEhkwFhAgEvlQEXoQEiAgEypAEhpAE8AgEqpgEXpgFNAgEtsAFIsAFgAgElsAG8AbABtQICASSxAX6xAcsBAgEhfRmEASICAVyFARmFAakBAgFXhgEZjQEiAgFRjgEZjgHmAQIBS48BGY8BrQECAUmWARmdASICAUCeARmeAakBAgE7nwEZnwHmAQIBNaABGaABrQECATOCAUWCAUkCAV9/Rn9RAgFdhQGVAYUBpgECAVqFATeFAT4CAViLAUSLAV4CAVSIAUWIAVICAVKOAVCOAWsCAU+OAccBjgHjAQIBTI8BhgGPAaoBAgFKmwFFmwFJAgFDmAFGmAFRAgFBngGVAZ4BpgECAT6eATeeAT4CATyfAVCfAWsCATmfAccBnwHjAQIBNqABhgGgAaoBAgE0</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -202,16 +215,17 @@
       <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="502,60" />
       <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="314,60" />
       <sap2010:ViewStateData Id="SaveAttachment_1" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="314,60" />
       <sap2010:ViewStateData Id="AddToCollection`1_3" sap:VirtualizedContainerService.HintSize="314,22" />
       <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="314,91" />
-      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="336,439">
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="336,539">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,587">
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,687">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -230,10 +244,10 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,587">
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -247,26 +261,32 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486,1429">
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486,993">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEach`1_2" sap:VirtualizedContainerService.HintSize="502,1563" />
-      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="ForEach`1_2" sap:VirtualizedContainerService.HintSize="502,1127" />
       <sap2010:ViewStateData Id="AddToCollection`1_2" sap:VirtualizedContainerService.HintSize="314,22" />
       <sap2010:ViewStateData Id="LogMessage_5" sap:VirtualizedContainerService.HintSize="314,91" />
-      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="336,377">
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="336,277">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="502,525" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="524,2452">
+      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="502,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="524,1542">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -283,16 +303,18 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="885,2600" />
-      <sap2010:ViewStateData Id="LogMessage_6" sap:VirtualizedContainerService.HintSize="847,91" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="907,3086">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="885,1690" />
+      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="885,60" />
+      <sap2010:ViewStateData Id="LogMessage_7" sap:VirtualizedContainerService.HintSize="885,91" />
+      <sap2010:ViewStateData Id="LogMessage_6" sap:VirtualizedContainerService.HintSize="885,91" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="907,2407">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CheckAttachments_1" sap:VirtualizedContainerService.HintSize="947,3166" />
+      <sap2010:ViewStateData Id="CheckAttachments_1" sap:VirtualizedContainerService.HintSize="947,2487" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

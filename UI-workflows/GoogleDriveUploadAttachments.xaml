@@ -83,11 +83,10 @@
               <Variable x:TypeArguments="x:Boolean" Name="folderExists" />
               <Variable x:TypeArguments="x:Boolean" Name="isComplete" />
             </Sequence.Variables>
-            <ui:Activate DelayBefore="{x:Null}" DelayMS="{x:Null}">
+            <ui:Activate DelayBefore="{x:Null}" DelayMS="{x:Null}" sap2010:WorkflowViewState.IdRef="Activate_1">
               <ui:Activate.Target>
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
               </ui:Activate.Target>
-              <sap2010:WorkflowViewState.IdRef>Activate_1</sap2010:WorkflowViewState.IdRef>
             </ui:Activate>
             <ui:UiElementExists DisplayName="Element Exists Folder" Exists="[folderExists]" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
               <ui:UiElementExists.Target>
@@ -156,7 +155,7 @@
                     <DelegateInArgument x:TypeArguments="x:String" Name="filePath" />
                   </ActivityAction.Argument>
                   <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_7">
-                    <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type Into" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_3" SendWindowMessages="False" SimulateType="False" Text="c[k(down)][k(down)][k(enter)]">
+                    <ui:TypeInto DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DelayBefore="2000" DisplayName="Type Into" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_3" SendWindowMessages="False" SimulateType="False" Text="c[k(down)][k(down)][k(enter)]">
                       <ui:TypeInto.Target>
                         <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
                       </ui:TypeInto.Target>
@@ -205,7 +204,7 @@
       </ui:SendHotkey.Target>
     </ui:SendHotkey>
     <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;GoogleDrive: Attachments upload done&quot;]" />
-    <sads:DebugSymbol.Symbol>dz9DOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZVVwbG9hZEF0dGFjaG1lbnRzLnhhbWw4SQPRAQ4CAQFKBUqkAQIBRksFyQEXAgEGygEFzgEVAgEEzwEFzwGpAQIBAkpySqEBAgFHS3NLhwECAURRC8YBFgIBB8oB5AHKAeoBAgEFzwFyzwGmAQIBA1YNWxsCAUNcDWAiAgE9YQ17EgIBLnwNiAEYAgEkiQENlwEcAgEemAENrQEaAgESrgENsgEiAgENswENxQESAgEIXosBXuoBAgFBXvUBXvsBAgFAXExcXAIBPmEbYSsCAS9jEXkcAgExfQ+BAR8CASyCAQ+GAR0CASiHAQ+HAb4BAgEliQG3AokByAICASGJAZMCiQGWAgIBIJUBoAGVAdIBAgEjmAGYAZgBrAECARyeAROqAR4CAROwAYsBsAG8AQIBEbABxwGwAc4BAgEQrgFMrgFaAgEOswEbswEpAgEJtQERwwEcAgELZBNkwgECATplE3MiAgE0dBN4IwIBMn3uAX3xAQIBLYQBogGEAcoBAgErggGjAoIBzAICASmHAXyHAbsBAgEmnwEVowEjAgEapAEVqAEjAgEWqQEVqQGxAQIBFMEBpAHBAbUCAgEMZIABZL8BAgE7Zb0CZc4CAgE3ZZkCZZwCAgE2caYBcdgBAgE5dPIBdPcBAgEznwGfAp8BvgICARumAagBpgGQAgIBGaQBqQKkAc0CAgEXqQGCAakBrgECARU=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz9DOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZVVwbG9hZEF0dGFjaG1lbnRzLnhhbWw5SQPQAQ4CAQFKBUqkAQIBR0sFyAEXAgEGyQEFzQEVAgEEzgEFzgGpAQIBAkpySqEBAgFIS3NLhwECAUVRC8UBFgIBB8kB5AHJAeoBAgEFzgFyzgGmAQIBA1YNWhsCAURbDV8iAgE+YA16EgIBL3sNhwEYAgEliAENlgEcAgEflwENrAEaAgESrQENsQEiAgENsgENxAESAgEIXYsBXeoBAgFCXfUBXfsBAgFBW0xbXAIBP2AbYCsCATBiEXgcAgEyfA+AAR8CAS2BAQ+FAR0CASmGAQ+GAb4BAgEmiAG3AogByAICASKIAZMCiAGWAgIBIZQBoAGUAdIBAgEklwGYAZcBrAECAR2dAROpAR4CAROvAYsBrwG8AQIBEa8BxwGvAc4BAgEQrQFMrQFaAgEOsgEbsgEpAgEJtAERwgEcAgELYxNjwgECATtkE3IiAgE1cxN3IwIBM3zuAXzxAQIBLoMBogGDAcoBAgEsgQGjAoEBzAICASqGAXyGAbsBAgEnngEVogEjAgEaowEVpwEjAgEWqAEVqAGxAQIBFMABpAHAAbUCAgEMY4ABY78BAgE8ZL0CZM4CAgE4ZJkCZJwCAgE3cKYBcNgBAgE6c/IBc/cBAgE0ngGbAp4BugICARyeAYcBngGNAQIBG6UBqAGlAZACAgEZowGpAqMBzQICAReoAYIBqAGuAQIBFQ==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

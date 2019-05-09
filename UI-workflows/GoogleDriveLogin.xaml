@@ -68,7 +68,6 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="GoogleDriveLogin" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -76,7 +75,7 @@
       <Variable x:TypeArguments="x:String" Name="username" />
       <Variable x:TypeArguments="ss:SecureString" Name="password" />
     </Sequence.Variables>
-    <ui:LogMessage DisplayName="Log Message" Level="Info" Message="[&quot;GoogleDrive: Login&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_3" />
+    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;GoogleDrive: Login&quot;]" />
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GetAppCredentials workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\GetAppCredentials.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <OutArgument x:TypeArguments="x:String" x:Key="out_Username">[username]</OutArgument>
@@ -127,7 +126,7 @@
             </If>
             <ui:UiElementExists DisplayName="Element Exists Need Login" Exists="[needLogin]" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
               <ui:UiElementExists.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="b0571a481d0088e5ceb96bd141376247" Selector="&lt;webctrl parentid='headingText' tag='content' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="b0571a481d0088e5ceb96bd141376247" Selector="&lt;webctrl parentid='headingText' tag='content' /&gt;" TimeoutMS="3000" WaitForReady="COMPLETE" />
               </ui:UiElementExists.Target>
             </ui:UiElementExists>
             <If Condition="[needLogin]" sap2010:WorkflowViewState.IdRef="If_1">
@@ -135,12 +134,12 @@
                 <Sequence sap2010:WorkflowViewState.IdRef="Sequence_3">
                   <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into Username" EmptyField="True" sap2010:WorkflowViewState.IdRef="TypeInto_1" SendWindowMessages="False" SimulateType="False" Text="[username+ &quot;[k(enter)]&quot;]">
                     <ui:TypeInto.Target>
-                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1b3aead90b4c3d9b60e65e2c51923b1f" Selector="&lt;webctrl id='identifierId' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1b3aead90b4c3d9b60e65e2c51923b1f" Selector="&lt;webctrl id='identifierId' tag='INPUT' /&gt;" WaitForReady="COMPLETE" />
                     </ui:TypeInto.Target>
                   </ui:TypeInto>
                   <ui:TypeSecureText DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Secure Text Password" EmptyField="True" sap2010:WorkflowViewState.IdRef="TypeSecureText_1" SecureText="[password]" SendWindowMessages="False" SimulateType="False">
                     <ui:TypeSecureText.Target>
-                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="63806723e6e95e93ecdbdc1cbdb158fb" Selector="&lt;webctrl name='password' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="63806723e6e95e93ecdbdc1cbdb158fb" Selector="&lt;webctrl name='password' tag='INPUT' /&gt;" WaitForReady="COMPLETE" />
                     </ui:TypeSecureText.Target>
                   </ui:TypeSecureText>
                   <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click Next" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
@@ -181,7 +180,7 @@
         </ActivityAction>
       </ui:OpenBrowser.Body>
     </ui:OpenBrowser>
-    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZUxvZ2luLnhhbWwuSgO5AQ4CAQFPBU+XAQIBOFAFVh0CATBXBbcBFgIBAk9DT2UCATlUTVRXAgE2U0ZTXAIBNFJGUlACATJQvgFQ4AECATFXqwFXwAECAS5XxQFX1AECASxdC7QBFgIBA2INZhsCAStnDWeFAQIBKmgNbCICASVtDX8SAgEggAENhAEiAgEbhQENswESAgEEaosBaokCAgEpapQCapoCAgEoaE5oXAIBJm0bbSkCASFvEX0cAgEjggGLAYIBwwECAR+CAc4BggHUAQIBHoABUIABXQIBHIUBG4UBKAIBBYcBEacBHAIBDKoBEbEBHAIBB3ukAXudAgIBJIgBE4wBIQIBF40BE5EBJwIBE5IBE6ABHgIBEaEBE6UBLAIBD6YBE6YBsAECAQ2rAROvASwCAQqwAROwAbIBAgEIigGmAYoB1wECARqIAaQCiAHIAgIBGI8BpgGPAdUBAgEWjQGNAo0BmQICARSeAaYBngHcAQIBEqMBpgGjAYMCAgEQpgGAAaYBrQECAQ6tAaYBrQGDAgIBC7ABgAGwAa8BAgEJ</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZUxvZ2luLnhhbWwuSQO4AQ4CAQFOBU6XAQIBOE8FVR0CATBWBbYBFgIBAk5yTpQBAgE5U01TVwIBNlJGUlwCATRRRlFQAgEyT74BT+ABAgExVqsBVsABAgEuVsUBVtQBAgEsXAuzARYCAQNhDWUbAgErZg1mhQECASpnDWsiAgElbA1+EgIBIH8NgwEiAgEbhAENsgESAgEEaYsBaYkCAgEpaZQCaZoCAgEoZ05nXAIBJmwbbCkCASFuEXwcAgEjgQGLAYEBwwECAR+BAc4BgQHUAQIBHn9Qf10CARyEARuEASgCAQWGARGmARwCAQypARGwARwCAQd6pAF6nQICASSHAROLASECAReMAROQAScCARORAROfAR4CARGgAROkASwCAQ+lAROlAbABAgENqgETrgEsAgEKrwETrwGyAQIBCIkBpgGJAdcBAgEahwGkAocByAICARiOAaYBjgHVAQIBFowBjQKMAZkCAgEUnQGmAZ0B3AECARKiAaYBogGDAgIBEKUBgAGlAa0BAgEOrAGmAawBgwICAQuvAYABrwGvAQIBCQ==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

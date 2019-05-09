@@ -69,6 +69,9 @@
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>UiPath.PDF</AssemblyReference>
+      <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Flowchart sap2010:WorkflowViewState.IdRef="Flowchart_1">
@@ -82,8 +85,12 @@
       <Variable x:TypeArguments="x:String" Name="tempFolder" />
       <Variable x:TypeArguments="x:String" Name="mailSubject" />
       <Variable x:TypeArguments="scg:List(x:String)" Name="attachmentsPathList" />
-      <Variable x:TypeArguments="x:String" Name="personName" />
       <Variable x:TypeArguments="x:String" Name="pdfPath" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="personData" />
+      <Variable x:TypeArguments="x:String" Name="dbProviderName" />
+      <Variable x:TypeArguments="x:String" Name="dbConnectionString" />
+      <Variable x:TypeArguments="x:String" Name="dbDatatableName" />
+      <Variable x:TypeArguments="x:String" Name="dbFilePath" />
     </Flowchart.Variables>
     <Flowchart.StartNode>
       <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_1">
@@ -129,6 +136,38 @@
               <InArgument x:TypeArguments="x:String">[in_Config("tempFolder")]</InArgument>
             </Assign.Value>
           </Assign>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_6">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[dbConnectionString]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[in_Config("dbConnectionString")]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_7">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[dbProviderName]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[in_Config("dbProviderName")]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_8">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[dbFilePath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[in_Config("dbFilePath")]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_9">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[dbDatatableName]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[in_Config("dbDatatableName")]</InArgument>
+            </Assign.Value>
+          </Assign>
         </Sequence>
         <FlowStep.Next>
           <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_3">
@@ -148,11 +187,11 @@
                   <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_4">
                     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ValidateData workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Document-workflows\ValidateData.xaml">
                       <ui:InvokeWorkflowFile.Arguments>
-                        <OutArgument x:TypeArguments="x:String" x:Key="out_personName">[personName]</OutArgument>
                         <OutArgument x:TypeArguments="x:Boolean" x:Key="out_isValidData">[isValidData]</OutArgument>
                         <InOutArgument x:TypeArguments="scg:List(x:String)" x:Key="io_requesterMessages">[requesterMessages]</InOutArgument>
                         <InArgument x:TypeArguments="x:String" x:Key="in_pdfPath">[pdfPath]</InArgument>
                         <OutArgument x:TypeArguments="x:Boolean" x:Key="out_isValidTemplate">[isValidTemplate]</OutArgument>
+                        <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_personData">[personData]</OutArgument>
                       </ui:InvokeWorkflowFile.Arguments>
                     </ui:InvokeWorkflowFile>
                     <FlowStep.Next>
@@ -160,23 +199,41 @@
                         <FlowDecision.True>
                           <FlowDecision x:Name="__ReferenceID6" Condition="[isValidData]" DisplayName="Is Valid Data" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
                             <FlowDecision.True>
-                              <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_5">
-                                <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GoogleDriveUploadAttachments workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="UI-workflows\GoogleDriveUploadAttachments.xaml">
+                              <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_6">
+                                <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke StoreDataDB workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Document-workflows\StoreDataDB.xaml">
                                   <ui:InvokeWorkflowFile.Arguments>
-                                    <InArgument x:TypeArguments="ui:Browser" x:Key="in_browserWindow">[in_browserWindow]</InArgument>
-                                    <InArgument x:TypeArguments="x:String" x:Key="in_personName">[personName]</InArgument>
-                                    <InArgument x:TypeArguments="scg:List(x:String)" x:Key="in_filesPathList">[attachmentsPathList]</InArgument>
+                                    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_personData">[personData]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_dbConnectionString">[dbConnectionString]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_dbProviderName">[dbProviderName]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_dbFilePath">[dbFilePath]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_dbDatatableName">[dbDatatableName]</InArgument>
                                   </ui:InvokeWorkflowFile.Arguments>
                                 </ui:InvokeWorkflowFile>
                                 <FlowStep.Next>
-                                  <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_2">
-                                    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SendReply workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Mail-workflows\SendReply.xaml">
+                                  <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+                                    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke GoogleDriveUploadAttachments workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="UI-workflows\GoogleDriveUploadAttachments.xaml">
                                       <ui:InvokeWorkflowFile.Arguments>
-                                        <InArgument x:TypeArguments="x:String" x:Key="in_requesterMail">[requesterMailAddress]</InArgument>
-                                        <InArgument x:TypeArguments="x:String" x:Key="in_mailSubject">[mailSubject]</InArgument>
-                                        <InOutArgument x:TypeArguments="scg:List(x:String)" x:Key="io_requesterMessages">[requesterMessages]</InOutArgument>
+                                        <InArgument x:TypeArguments="ui:Browser" x:Key="in_browserWindow">[in_browserWindow]</InArgument>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_personName">[personData("NAME")]</InArgument>
+                                        <InArgument x:TypeArguments="scg:List(x:String)" x:Key="in_filesPathList">[attachmentsPathList]</InArgument>
                                       </ui:InvokeWorkflowFile.Arguments>
                                     </ui:InvokeWorkflowFile>
+                                    <FlowStep.Next>
+                                      <FlowStep x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowStep_7">
+                                        <AddToCollection x:TypeArguments="x:String" Collection="[requesterMessages]" DisplayName="Success Message" Item="Please note that the request was processed successfully." sap2010:WorkflowViewState.IdRef="AddToCollection`1_3" />
+                                        <FlowStep.Next>
+                                          <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+                                            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SendReply workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Mail-workflows\SendReply.xaml">
+                                              <ui:InvokeWorkflowFile.Arguments>
+                                                <InArgument x:TypeArguments="x:String" x:Key="in_requesterMail">[requesterMailAddress]</InArgument>
+                                                <InArgument x:TypeArguments="x:String" x:Key="in_mailSubject">[mailSubject]</InArgument>
+                                                <InOutArgument x:TypeArguments="scg:List(x:String)" x:Key="io_requesterMessages">[requesterMessages]</InOutArgument>
+                                              </ui:InvokeWorkflowFile.Arguments>
+                                            </ui:InvokeWorkflowFile>
+                                          </FlowStep>
+                                        </FlowStep.Next>
+                                      </FlowStep>
+                                    </FlowStep.Next>
                                   </FlowStep>
                                 </FlowStep.Next>
                               </FlowStep>
@@ -210,7 +267,9 @@
     <x:Reference>__ReferenceID5</x:Reference>
     <x:Reference>__ReferenceID6</x:Reference>
     <x:Reference>__ReferenceID7</x:Reference>
-    <sads:DebugSymbol.Symbol>dx1DOlxQbGF0b25cSFJvYm90XFByb2Nlc3MueGFtbDBKA9YBDwIBAVoJhAEUAgEyhwENkAElAgEkkgE/kgFTAgEirQElswE9AgEalQEVnQEtAgEOnwFHnwFaAgEMoQFLoQFaAgEKpAEhqgE5AgECWwtiFAIBTGMLahQCAUdrC3IUAgFCcwt6FAIBPXsLe/ABAgE4fAuDARQCATOKAVeKAWkCATCOAU2OAVYCAS6MAWOMAXgCASyLAU6LAVoCASqJAU+JAVgCASiHAcUBhwHrAQIBJ40BYo0BdQIBJbABZ7ABdAIBIK8Baa8BfwIBHq0B1gGtAfUBAgEdsQF6sQGNAQIBG5gBWpgBZwIBGJsBXpsBbwIBFpUByQGVAe8BAgEVmgFTmgFcAgETmQFqmQF9AgERlwFYlwFkAgEPqAFvqAGEAQIBCKcBYqcBbgIBBqYBZ6YBeQIBBKQB5QGkAZUCAgEDYEBgVgIBT11BXVQCAU1oNmhOAgFKZTdlTQIBSHA2cFICAUVtN21GAgFDeDZ4RwIBQHU3dUQCAT57QntXAgE7e7oBe+0BAgE5gQE2gQFPAgE2fjd+QwIBNA==</sads:DebugSymbol.Symbol>
+    <x:Reference>__ReferenceID8</x:Reference>
+    <x:Reference>__ReferenceID9</x:Reference>
+    <sads:DebugSymbol.Symbol>dx1DOlxQbGF0b25cSFJvYm90XFByb2Nlc3MueGFtbEZNA5ECDwIBAWEJqwEUAgFCrgENtwElAgE0uQE/uQFTAgEy4gEt6AFFAgEqvAEVxAEtAgEexgFHxgFaAgEcyAFLyAFaAgEaywEh0wE5AgEO1gEl3AE9AgEG3wEp3wGMAgIBAmILaRQCAXBqC3EUAgFrcgt5FAIBZnoLgQEUAgFhggELggHwAQIBXIMBC4oBFAIBV4sBC5IBFAIBUpMBC5oBFAIBTZsBC6IBFAIBSKMBC6oBFAIBQ7EBV7EBaQIBQLUBTbUBVgIBPrMBY7MBeAIBPLIBTrIBWgIBOrABT7ABWAIBOK4BxQGuAesBAgE3tAFitAF1AgE15QFv5QF8AgEw5AFx5AGHAQIBLuIB3gHiAf0BAgEt5gGCAeYBlQECASu+AVq+AWcCASjBAV7BAW8CASbCAXLCAX4CASS8AckBvAHvAQIBI8ABU8ABXAIBIb8Bar8BfQIBH84Bas4BfgIBGNABYtABbgIBFtEBZ9EBeAIBFM8BZs8BdgIBEs0BfM0BiAECARDLAdQBywH5AQIBD9oBc9oBiAECAQzZAWbZAXoCAQrYAWvYAX0CAQjWAekB1gGZAgIBB98BYN8BdQIBBN8BmQHfAdMBAgEDZ0BnVgIBc2RBZFQCAXFvNm9OAgFubDdsTQIBbHc2d1ICAWl0N3RGAgFnfzZ/RwIBZHw3fEQCAWKCAUKCAVcCAV+CAboBggHtAQIBXYgBNogBTwIBWoUBN4UBQwIBWJABNpABVwIBVY0BN40BSwIBU5gBNpgBUwIBUJUBN5UBRwIBTqABNqABTwIBS50BN50BQwIBSagBNqgBVAIBRqUBN6UBSAIBRA==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -220,6 +279,10 @@
       <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="242,60" />
       <sap2010:ViewStateData Id="AddToCollection`1_1" sap:VirtualizedContainerService.HintSize="242,22" />
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="242,60" />
       <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -234,7 +297,14 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="314,87">
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_5" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -248,6 +318,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="AddToCollection`1_3" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="InvokeWorkflowFile_2" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -258,17 +329,35 @@
       <sap2010:ViewStateData Id="FlowStep_2">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">600,664.5</av:Point>
+            <av:Point x:Key="ShapeLocation">600,774.5</av:Point>
             <av:Size x:Key="ShapeSize">200,51</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_7">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">330,789</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">530,800 600,800</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="FlowStep_5">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">40,664.02</av:Point>
+            <av:Point x:Key="ShapeLocation">40,774.02</av:Point>
             <av:Size x:Key="ShapeSize">200,51</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">240,689.52 270,689.52 270,690 600,690</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">240,799.52 270,799.52 270,800 330,800</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">40,674.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">140,725.5 140,774.02</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -278,8 +367,8 @@
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">185,546.5</av:Point>
             <av:Size x:Key="ShapeSize">70,87</av:Size>
-            <av:PointCollection x:Key="FalseConnector">255,590 700,590 700,664.5</av:PointCollection>
-            <av:PointCollection x:Key="TrueConnector">185,590 140,590 140,664.02</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">255,590 700,590 700,774.5</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">185,590 140,590 140,674.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -289,7 +378,7 @@
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">293,446.5</av:Point>
             <av:Size x:Key="ShapeSize">94,87</av:Size>
-            <av:PointCollection x:Key="FalseConnector">387,490 700,490 700,664.5</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">387,490 700,490 700,774.5</av:PointCollection>
             <av:PointCollection x:Key="TrueConnector">293,490 220,490 220,546.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -309,7 +398,7 @@
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">449,256.5</av:Point>
             <av:Size x:Key="ShapeSize">102,87</av:Size>
-            <av:PointCollection x:Key="FalseConnector">551,300 700,300 700,664.5</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">551,300 700,300 700,774.5</av:PointCollection>
             <av:PointCollection x:Key="TrueConnector">449,300 340,300 340,354.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -317,9 +406,9 @@
       <sap2010:ViewStateData Id="FlowStep_3">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">400,174.5</av:Point>
+            <av:Point x:Key="ShapeLocation">400,184.5</av:Point>
             <av:Size x:Key="ShapeSize">200,51</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">500,225.5 500,256.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">500,235.5 500,256.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -328,7 +417,7 @@
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">400,104.5</av:Point>
             <av:Size x:Key="ShapeSize">200,51</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">500,155.5 500,174.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">500,155.5 500,184.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -344,7 +433,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ProcessTransaction_1" sap:VirtualizedContainerService.HintSize="986,1012" />
+      <sap2010:ViewStateData Id="ProcessTransaction_1" sap:VirtualizedContainerService.HintSize="986,972" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

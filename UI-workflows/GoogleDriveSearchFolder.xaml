@@ -70,7 +70,7 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="GoogleDriveSearchFolder" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;GoogleDrive: Go to robot folder&quot;]" />
-    <ui:BrowserScope SearchScope="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" Browser="[in_browserWindow]" BrowserType="IE" DisplayName="Attach Browser " sap2010:WorkflowViewState.IdRef="BrowserScope_1" InformativeScreenshot="5ce9d887d221ee08ab1b1eec91f9d549">
+    <ui:BrowserScope SearchScope="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" Browser="[in_browserWindow]" BrowserType="IE" DisplayName="Attach Browser " sap2010:WorkflowViewState.IdRef="BrowserScope_1" InformativeScreenshot="210e7be7be7fc244867caca17ccb0815">
       <ui:BrowserScope.Body>
         <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>
@@ -82,12 +82,12 @@
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="800d21791aff6a47cf37cd80b45f28c4" Selector="&lt;webctrl name='q' tag='INPUT' /&gt;" WaitForReady="COMPLETE" />
               </ui:TypeInto.Target>
             </ui:TypeInto>
-            <ui:SendHotkey DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="False" ClickBeforeTyping="False" DelayBefore="1000" DisplayName="Send Hotkey Down to folder" EmptyField="False" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="down" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+            <ui:SendHotkey DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DelayBefore="1000" DisplayName="Send Hotkey Down to folder" EmptyField="False" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="down" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
               <ui:SendHotkey.Target>
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="dd2c36afd1a41b2b72102517b063ebfb" WaitForReady="COMPLETE" />
               </ui:SendHotkey.Target>
             </ui:SendHotkey>
-            <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="False" ClickBeforeTyping="False" DisplayName="Send Hotkey Enter folder" EmptyField="False" sap2010:WorkflowViewState.IdRef="SendHotkey_3" Key="enter" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+            <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey Enter folder" EmptyField="False" sap2010:WorkflowViewState.IdRef="SendHotkey_3" Key="enter" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
               <ui:SendHotkey.Target>
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="dd2c36afd1a41b2b72102517b063ebfb" WaitForReady="COMPLETE" />
               </ui:SendHotkey.Target>
@@ -97,7 +97,7 @@
       </ui:BrowserScope.Body>
     </ui:BrowserScope>
     <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;GoogleDrive: In robot folder&quot;]" />
-    <sads:DebugSymbol.Symbol>dzpDOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZVNlYXJjaEZvbGRlci54YW1sEEcDZQ4CAQFIBUikAQIBEUkFYhcCAQRjBWOhAQIBAkhySKEBAgESSXNJhwECAQ9PC18WAgEFY3JjngECAQNQDVQbAgELVQ1ZHQIBCFoNXh0CAQZSoAFSyAECAQ5QnwJQyAICAQxVggFViAECAQpV+AFV/gECAQla+gFagQICAQc=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzpDOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZVNlYXJjaEZvbGRlci54YW1sEEcDZQ4CAQFIBUikAQIBEUkFYhcCAQRjBWOhAQIBAkhySKEBAgESSXNJhwECAQ9PC18WAgEFY3JjngECAQNQDVQbAgELVQ1ZHQIBCFoNXh0CAQZSoAFSyAECAQ5QnwJQyAICAQxVgQFVhwECAQpV9wFV/QECAQla+QFagAICAQc=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

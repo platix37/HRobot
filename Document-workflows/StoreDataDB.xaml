@@ -101,7 +101,7 @@
         <InArgument x:TypeArguments="x:Int32">[Convert.ToInt32(maxIdDt(0)(0)) + 1]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Execute Query" ExistingDbConnection="[dbConnection]" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="[&quot;INSERT INTO &quot; +in_dbDatatableName+ &quot; VALUES ('&quot;+newMaxID.ToString+&quot;', '&quot;+in_personData(&quot;NAME&quot;)+&quot;', '&quot;+in_personData(&quot;ADDRESS&quot;)+&quot;', '&quot;+in_personData(&quot;PHONE_1&quot;)+&quot;', '&quot;+in_personData(&quot;PHONE_2&quot;)+&quot;', '&quot;+in_personData(&quot;EMAIL&quot;)+&quot;', '&quot;+in_personData(&quot;SEX&quot;)+&quot;', '&quot;+in_personData(&quot;BIRTHDATE&quot;)+&quot;', '&quot;+in_personData(&quot;JOB&quot;)+&quot;')&quot;]">
+    <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Execute Query" ExistingDbConnection="[dbConnection]" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="[&quot;INSERT INTO &quot; +in_dbDatatableName+ &quot; VALUES ('&quot;+newMaxID.ToString+&quot;', '&quot;+in_personData(&quot;NAME&quot;)+&quot;', '&quot;+in_personData(&quot;ADDRESS&quot;)+&quot;', '&quot;+in_personData(&quot;PHONE_1&quot;)+&quot;', '&quot;+in_personData(&quot;PHONE_2&quot;)+&quot;', '&quot;+in_personData(&quot;EMAIL&quot;)+&quot;', '&quot;+in_personData(&quot;SEX&quot;)+&quot;', '&quot;+in_personData(&quot;BIRTHDATE&quot;)+&quot;', '&quot;+in_personData(&quot;NATIONALITY&quot;)+&quot;', '&quot;+in_personData(&quot;JOB&quot;)+&quot;')&quot;]">
       <ui:ExecuteQuery.Parameters>
         <scg:Dictionary x:TypeArguments="x:String, Argument" />
       </ui:ExecuteQuery.Parameters>
@@ -109,7 +109,7 @@
     <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Database: Query executed&quot;]" />
     <ui:DatabaseDisconnect DatabaseConnection="[dbConnection]" DisplayName="Disconnect" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_1" />
     <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Database: disconnected&quot;]" />
-    <sads:DebugSymbol.Symbol>dzRDOlxQbGF0b25cSFJvYm90XERvY3VtZW50LXdvcmtmbG93c1xTdG9yZURhdGFEQi54YW1sF1MDcQ4CAQFZBVmXAQIBKloFWucBAgEiWwVfFwIBG2AFZw4CARdoBWwXAgEJbQVtnQECAQduBW6SAQIBBG8Fb5sBAgECWXJZlAECAStalAFaqQECAShauwFa5AECASVaLFo8AgEjW6ABW7ABAgEgW2NbbgIBHlvmAVueAgIBHGUvZVMCARpiMGI6AgEYaJ8BaK8BAgEVaOUBaOMFAgEKbXJtmgECAQhuL24/AgEFb3JvmAECAQM=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzRDOlxQbGF0b25cSFJvYm90XERvY3VtZW50LXdvcmtmbG93c1xTdG9yZURhdGFEQi54YW1sF1MDcQ4CAQFZBVmXAQIBK1oFWucBAgEjWwVfFwIBHGAFZw4CARhoBWwXAgEJbQVtnQECAQduBW6SAQIBBG8Fb5sBAgECWXJZlAECASxalAFaqQECASlauwFa5AECASZaLFo8AgEkW6ABW7ABAgEhW2NbbgIBH1vmAVueAgIBHWUvZVMCARtiMGI6AgEZaJ8BaK8BAgEWaOUBaJsGAgEKbXJtmgECAQhuL24/AgEFb3JvmAECAQM=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

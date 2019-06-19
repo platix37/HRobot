@@ -70,7 +70,6 @@
       <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
       <AssemblyReference>UiPath.PDF</AssemblyReference>
       <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="GoogleDriveLogin" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -105,7 +104,7 @@
             <ui:MaximizeWindow Window="{x:Null}" DisplayName="Maximize Window" sap2010:WorkflowViewState.IdRef="MaximizeWindow_1" />
             <ui:UiElementExists DisplayName="Element Exists Homepage" Exists="[isHomepage]" sap2010:WorkflowViewState.IdRef="UiElementExists_2">
               <ui:UiElementExists.Target>
-                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="aebb924829e68ae22bd084b65e1681ed" Selector="&lt;webctrl aaname='Go to Google Drive' omit:css-selector='body&amp;gt;section&amp;gt;div&amp;gt;div&amp;gt;a' tag='A' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="d68383fef2ef8b32152b7bce2654be89" Selector="&lt;webctrl aaname='Go to Google Drive' omit:css-selector='body&amp;gt;section&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;a' tag='A' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
               </ui:UiElementExists.Target>
             </ui:UiElementExists>
             <If Condition="[isHomepage]" sap2010:WorkflowViewState.IdRef="If_2">
@@ -122,7 +121,7 @@
                     </ui:CursorPosition>
                   </ui:Click.CursorPosition>
                   <ui:Click.Target>
-                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="aebb924829e68ae22bd084b65e1681ed" Selector="&lt;webctrl aaname='Go to Google Drive' css-selector='body&amp;gt;section&amp;gt;div&amp;gt;div&amp;gt;a' tag='A' /&gt;" WaitForReady="INTERACTIVE" />
+                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="aebb924829e68ae22bd084b65e1681ed" Selector="&lt;webctrl aaname='Go to Google Drive' omit:css-selector='body&amp;gt;section&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;a' tag='A' /&gt;" WaitForReady="INTERACTIVE" />
                   </ui:Click.Target>
                 </ui:Click>
               </If.Then>
@@ -184,18 +183,18 @@
         </ActivityAction>
       </ui:OpenBrowser.Body>
     </ui:OpenBrowser>
-    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZUxvZ2luLnhhbWwwTAO8AQ4CAQFRBVGXAQIBO1IFWB0CATNZBboBFgIBAlFyUZQBAgE8Vk1WVwIBOVVGVVwCATdURlRQAgE1Ur4BUuABAgE0WasBWcABAgExWcUBWdQBAgEvXwu3ARYCAQNkDWgbAgEuaQ1phQECAS1qDW4iAgEobw2BARICASOCAQ2GASICAR6HAQ22ARICAQRsiwFsiQICASxslAJsmgICAStqTmpcAgEpbxtvKQIBJHERfxwCASaEAYsBhAHxAQIBIoQB/AGEAYICAgEhggFQggFdAgEfhwEbhwEoAgEFiQERqgEcAgEMrQERtAEcAgEHfaQBfZ0CAgEnigETigGPAQIBG4sBE48BIQIBF5ABE5QBJwIBE5UBE6MBHgIBEaQBE6gBLAIBD6kBE6kBsAECAQ2uAROyASwCAQqzAROzAbIBAgEIigGAAYoBjAECARyNAaYBjQHXAQIBGosBpAKLAcgCAgEYkgGmAZIB1QECARaQAY0CkAGZAgIBFKEBpgGhAdwBAgESpgGmAaYBgwICARCpAYABqQGtAQIBDrABpgGwAYMCAgELswGAAbMBrwECAQk=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzNDOlxQbGF0b25cSFJvYm90XFVJLXdvcmtmbG93c1xHb29nbGVEcml2ZUxvZ2luLnhhbWwwSwO7AQ4CAQFQBVCXAQIBO1EFVx0CATNYBbkBFgIBAlByUJQBAgE8VU1VVwIBOVRGVFwCATdTRlNQAgE1Ub4BUeABAgE0WKsBWMABAgExWMUBWNQBAgEvXgu2ARYCAQNjDWcbAgEuaA1ohQECAS1pDW0iAgEobg2AARICASOBAQ2FASICAR6GAQ21ARICAQRriwFrnwICASxrqgJrsAICAStpTmlcAgEpbhtuKQIBJHARfhwCASaDAYsBgwHxAQIBIoMB/AGDAYICAgEhgQFQgQFdAgEfhgEbhgEoAgEFiAERqQEcAgEMrAERswEcAgEHfKQBfLgCAgEniQETiQGPAQIBG4oBE44BIQIBF48BE5MBJwIBE5QBE6IBHgIBEaMBE6cBLAIBD6gBE6gBsAECAQ2tAROxASwCAQqyAROyAbIBAgEIiQGAAYkBjAECARyMAaYBjAHXAQIBGooBpAKKAcgCAgEYkQGmAZEB1QECARaPAY0CjwGZAgIBFKABpgGgAdwBAgESpQGmAaUBgwICARCoAYABqAGtAQIBDq8BpgGvAYMCAgELsgGAAbIBrwECAQk=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="735.2,92.8" />
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="735.2,88" />
-      <sap2010:ViewStateData Id="Activate_1" sap:VirtualizedContainerService.HintSize="698.4,68.8" />
-      <sap2010:ViewStateData Id="MaximizeWindow_1" sap:VirtualizedContainerService.HintSize="698.4,22.4" />
-      <sap2010:ViewStateData Id="UiElementExists_2" sap:VirtualizedContainerService.HintSize="698.4,107.2" />
-      <sap2010:ViewStateData Id="Click_2" sap:VirtualizedContainerService.HintSize="314.4,107.2" />
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="698.4,256.8" />
-      <sap2010:ViewStateData Id="UiElementExists_1" sap:VirtualizedContainerService.HintSize="698.4,107.2" />
+      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="734,91" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="734,87" />
+      <sap2010:ViewStateData Id="Activate_1" sap:VirtualizedContainerService.HintSize="698,68" />
+      <sap2010:ViewStateData Id="MaximizeWindow_1" sap:VirtualizedContainerService.HintSize="698,22" />
+      <sap2010:ViewStateData Id="UiElementExists_2" sap:VirtualizedContainerService.HintSize="698,106" />
+      <sap2010:ViewStateData Id="Click_2" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="698,253" />
+      <sap2010:ViewStateData Id="UiElementExists_1" sap:VirtualizedContainerService.HintSize="698,106" />
       <sap2010:ViewStateData Id="LogMessage_4" sap:VirtualizedContainerService.HintSize="314.4,92.8" />
       <sap2010:ViewStateData Id="TypeInto_1" sap:VirtualizedContainerService.HintSize="314.4,135.2" />
       <sap2010:ViewStateData Id="TypeSecureText_1" sap:VirtualizedContainerService.HintSize="314.4,107.2" />
@@ -219,22 +218,22 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="698.4,1116.8" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="720.8,2004">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="720,1996">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="735.2,2104" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="757.6,2489.6">
+      <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="734,2095" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="756,2477">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="GoogleDriveLogin_1" sap:VirtualizedContainerService.HintSize="797.6,2569.6" />
+      <sap2010:ViewStateData Id="GoogleDriveLogin_1" sap:VirtualizedContainerService.HintSize="796,2557" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
